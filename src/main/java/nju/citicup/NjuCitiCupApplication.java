@@ -9,4 +9,5 @@ public class NjuCitiCupApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NjuCitiCupApplication.class, args);
 	}
+
 }
