@@ -9,9 +9,9 @@
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="../vendor/admin-lte/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../vendor/admin-lte/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -95,7 +95,7 @@
             </section>
 
             <!-- Main content -->
-            <section class="content">
+            <section id="main-content" class="content">
                 <div class="box box-default">
                     <div class="box-body">
                         相关说明
@@ -143,7 +143,19 @@
                                             <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>玉米1603</td>
+                                        <td>30</td>
+                                        <td><span class="label label-warning">67</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                                        </td>
+                                    </tr>
                                 </table>
+                                <div onclick="showMore('capital-id')" class="text-primary text-center"
+                                     style="padding: 10px;cursor: pointer;">
+                                    查看更多 <i class="fa fa-arrow-circle-right"></i>
+                                </div>
                             </div>
                             <!-- /.box-body -->
                         </div>
@@ -200,6 +212,67 @@
 
             </section>
             <!-- /.content -->
+
+            <!--Sub content-->
+            <section id="detail-table" class="content pop-window floating">
+                <div id="close" class="close-icon">×</div>
+                <div class="box-header">
+                    <h2 id="type-name" class="default-font">玉米</h2>
+                </div>
+                <!-- /.box-header -->
+                <table class="table no-padding" style="margin: 0;">
+                    <tr>
+                        <th width="20%">期货</th>
+                        <th width="20%">数量</th>
+                        <th width="10%">Delta</th>
+                        <th width="20%">操作</th>
+                    </tr>
+                </table>
+                <div class="box-body table-responsive no-padding" style="overflow-y: auto;height: 75%;">
+                    <table id="data-table" class="table">
+                        <tr>
+                            <td width="20%">玉米1601</td>
+                            <td width="20%">10</td>
+                            <td width="10%"><span class="label label-success">8</span></td>
+                            <td width="20%">
+                                <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>玉米1602</td>
+                            <td>20</td>
+                            <td><span class="label label-danger">99</span></td>
+                            <td>
+                                <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>玉米1603</td>
+                            <td>30</td>
+                            <td><span class="label label-warning">67</span></td>
+                            <td>
+                                <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>玉米1603</td>
+                            <td>30</td>
+                            <td><span class="label label-warning">67</span></td>
+                            <td>
+                                <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>玉米1603</td>
+                            <td>30</td>
+                            <td><span class="label label-warning">67</span></td>
+                            <td>
+                                <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
         </div>
         <!-- /.container -->
     </div>
