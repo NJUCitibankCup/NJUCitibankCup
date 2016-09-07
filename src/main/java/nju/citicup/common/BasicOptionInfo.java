@@ -25,6 +25,9 @@ public class BasicOptionInfo {
     /*成交日期*/
     Date tradeDate;
 
+    /*障碍系数*/
+    double H;
+
     @Transient
     /*期权价格*/
     double price;
@@ -99,5 +102,13 @@ public class BasicOptionInfo {
 
     public void setGamma(double gamma) {
         this.gamma = gamma;
+    }
+
+    public double getH() {
+        return H;
+    }
+
+    public void setH(double h) {
+        H = h;
     }
 }
