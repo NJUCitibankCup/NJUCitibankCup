@@ -17,7 +17,8 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../vendor/admin-lte/dist/css/skins/_all-skins.min.css">
-
+    <!--Featured css-->
+    <link rel="stylesheet" href="../../vendor/admin-lte/dist/css/citi.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -92,7 +93,7 @@
             </section>
 
             <!-- Main content -->
-            <section class="content">
+            <section class="content" id="main-content">
                 <div class="row">
                     <div class="col-lg-4 col-xs-6">
                         <!-- small box -->
@@ -181,65 +182,62 @@
                 </div>
                 <!-- /.box -->
                 <div align="right"><button class="btn btn-lg bg-blue" id="adjustBtn">一键调仓</button></div>
-
-                <section class="invoice" id="adjustBoard" style="display: none;">
-                    <div class="row">
-                        <!-- accepted payments column -->
-                        <div class="col-xs-6">
-                            <p class="lead">Payment Methods:</p>
-                            <img src="../../dist/img/credit/visa.png" alt="Visa">
-                            <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                            <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                            <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
-
-                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
-                                dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                            </p>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-xs-6">
-                            <p class="lead">Amount Due 2/22/2014</p>
-
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tr>
-                                        <th style="width:50%">Subtotal:</th>
-                                        <td>$250.30</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Tax (9.3%)</th>
-                                        <td>$10.34</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Shipping:</th>
-                                        <td>$5.80</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total:</th>
-                                        <td>$265.24</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- this row will not appear when printing -->
-                    <div class="row no-print">
-                        <div class="col-xs-12">
-                            <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                            <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-                            </button>
-                            <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-                                <i class="fa fa-download"></i> Generate PDF
-                            </button>
-                        </div>
-                    </div>
-                </section>
+                <!-- Main content -->
             </section>
             <!-- /.content -->
+            <!--Sub content-->
+            <section id="detail-table" class="content pop-window floating">
+                <div id="close" class="close-icon">×</div>
+                <div class="box-header">
+                    <h2 id="type-name" class="default-font">调仓结果</h2>
+                </div>
+                <!-- /.box-header -->
+                <!--content-row-->
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5 col-xs-12">
+                      <table class="table no-padding" style="margin: 0;">
+                    <tr>
+                    <th width="20%">期货种类</th>
+                    <th width="20%">玉米</th>
+                    <th width="20%">仓量</th>
+                    <th width="20%">250</th>
+                    </tr>
+                    <tr>
+                        <td width="20%">原有成本</td>
+                        <td width="20%">50</td>
+                        <td width="20%">原有数量</td>
+                        <td width="20%">500</td>
+                    </tr>
+                    <tr>
+                        <th width="20%">调整后Delta</th>
+                        <th width="20%">33</th>
+                        <th width="20%">调整前Delta</th>
+                        <th width="20%">66</th>
+                    </tr>
+                    <tr>
+                        <th width="20%">现数量</th>
+                        <th width="20%">5000</th>
+                        <th width="20%">VaR</th>
+                        <th width="20%">233</th>
+                    </tr>
+                    <tr>
+                        <th width="20%">警告状态</th>
+                        <th width="20%"><small class="label label-success">Safe</small></th>
+                        <th width="20%"></th>
+                        <th width="20%"></th>
+                    </tr>
+                </table>
+                    </div>
+                    <div class="col-lg-5 col-xs-12">
+                        <div class="chart">
+                            <canvas id="areaChart" style="height:250px"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+                <div align="center" style="margin-top: 20px;"><button class="btn btn-lg bg-blue" id="confirmAdjustBtn">确认</button></div>
+            </section>
         </div>
         <!-- /.container -->
     </div>
@@ -258,6 +256,8 @@
 <script src="../../vendor/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../../vendor/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+<!--ChartJS 1.0.1-->
+<script src="../../vendor/admin-lte/plugins/chartjs/Chart.min.js"></script>
 <!-- SlimScroll -->
 <script src="../../vendor/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -266,11 +266,6 @@
 <script src="../../vendor/admin-lte/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../vendor/admin-lte/dist/js/demo.js"></script>
-<script>
-    $("#adjustBtn").click(function () {
-        $("#adjustBoard").fadeIn(1000);
-    })
-</script>
-
+<script src="capital.js"></script>
 </body>
 </html>
