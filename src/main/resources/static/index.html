@@ -1,201 +1,217 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>查看期权状态 - CitiBank</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="../vendor/admin-lte/bootstrap/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../vendor/admin-lte/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="../vendor/admin-lte/dist/css/skins/_all-skins.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>查看期权状态 - CitiBank</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="../vendor/admin-lte/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../vendor/admin-lte/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="../vendor/admin-lte/dist/css/skins/_all-skins.min.css">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <!--Featured css-->
+    <link rel="stylesheet" href="../vendor/admin-lte/dist/css/citi.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
+<div class="wrapper default-font">
 
-  <header class="main-header">
-    <nav class="navbar navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a href="index.html" class="navbar-brand"><b>Citi</b>Bank</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+    <header class="main-header">
+        <nav class="navbar navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="index.html" class="navbar-brand"><b>Citi</b>Bank</a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">查看期权状态 <span class="sr-only">(current)</span></a></li>
-            <li><a href="sell/sell.html">卖期权</a></li>
-            <li><a href="about/about.html">关于</a></li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-        <!-- Navbar Right Menu -->
-        <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <!-- Notifications Menu -->
-            <li class="dropdown notifications-menu">
-              <!-- Menu toggle button -->
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-bell-o"></i>
-                <span class="label label-warning">10</span>
-              </a>
-              <ul class="dropdown-menu">
-                <li class="header">You have 10 notifications</li>
-                <li>
-                  <!-- Inner Menu: contains the notifications -->
-                  <ul class="menu">
-                    <li><!-- start notification -->
-                      <a href="#">
-                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                      </a>
-                    </li>
-                    <!-- end notification -->
-                  </ul>
-                </li>
-                <li class="footer"><a href="#">View all</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-custom-menu -->
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
-  </header>
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-    <div class="container">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>
-          查看期权状态
-        </h1>
-      </section>
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="box box-default">
-          <div class="box-body">
-            相关说明
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="box box-primary">
-              <div class="box-header">
-                <h3 class="box-title">玉米</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                  <tr>
-                    <th>期货</th>
-                    <th>数量</th>
-                    <th>Delta</th>
-                    <th>操作</th>
-                  </tr>
-                  <tr>
-                    <td>玉米1601</td>
-                    <td>10</td>
-                    <td><span class="label label-success">8</span></td>
-                    <td><button type="button" class="btn btn-block btn-default btn-xs">资产组合</button></td>
-                  </tr>
-                  <tr>
-                    <td>玉米1602</td>
-                    <td>20</td>
-                    <td><span class="label label-danger">99</span></td>
-                    <td><button type="button" class="btn btn-block btn-default btn-xs">资产组合</button></td>
-                  </tr>
-                  <tr>
-                    <td>玉米1603</td>
-                    <td>30</td>
-                    <td><span class="label label-warning">67</span></td>
-                    <td><button type="button" class="btn btn-block btn-default btn-xs">资产组合</button></td>
-                  </tr>
-                </table>
-              </div>
-              <!-- /.box-body -->
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">查看期权状态 <span class="sr-only">(current)</span></a></li>
+                        <li><a href="sell/sell.html">卖期权</a></li>
+                        <li><a href="about/about.html">关于</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Notifications Menu -->
+                        <li class="dropdown notifications-menu">
+                            <!-- Menu toggle button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 10 notifications</li>
+                                <li>
+                                    <!-- Inner Menu: contains the notifications -->
+                                    <ul class="menu">
+                                        <li><!-- start notification -->
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            </a>
+                                        </li>
+                                        <!-- end notification -->
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-custom-menu -->
             </div>
-            <!-- /.box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-md-6">
-            <div class="box box-primary">
-              <div class="box-header">
-                <h3 class="box-title">玉米</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                  <tr>
-                    <th>期货</th>
-                    <th>数量</th>
-                    <th>Delta</th>
-                    <th>操作</th>
-                  </tr>
-                  <tr>
-                    <td>玉米1601</td>
-                    <td>10</td>
-                    <td><span class="label label-success">8</span></td>
-                    <td><button type="button" class="btn btn-block btn-default btn-xs">资产组合</button></td>
-                  </tr>
-                  <tr>
-                    <td>玉米1602</td>
-                    <td>20</td>
-                    <td><span class="label label-danger">99</span></td>
-                    <td><button type="button" class="btn btn-block btn-default btn-xs">资产组合</button></td>
-                  </tr>
-                  <tr>
-                    <td>玉米1603</td>
-                    <td>30</td>
-                    <td><span class="label label-warning">67</span></td>
-                    <td><button type="button" class="btn btn-block btn-default btn-xs">资产组合</button></td>
-                  </tr>
-                </table>
-              </div>
-              <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
+            <!-- /.container-fluid -->
+        </nav>
+    </header>
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+        <div class="container">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 class="default-font">
+                    查看期权状态
+                </h1>
+            </section>
 
-      </section>
-      <!-- /.content -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="box box-default">
+                    <div class="box-body">
+                        相关说明
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title default-font">玉米</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>期货</th>
+                                        <th>数量</th>
+                                        <th>Delta</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <tr>
+                                        <td>玉米1601</td>
+                                        <td>10</td>
+                                        <td><span class="label label-success">8</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>玉米1602</td>
+                                        <td>20</td>
+                                        <td><span class="label label-danger">99</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>玉米1603</td>
+                                        <td>30</td>
+                                        <td><span class="label label-warning">67</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title default-font">玉米</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>期货</th>
+                                        <th>数量</th>
+                                        <th>Delta</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <tr>
+                                        <td>玉米1601</td>
+                                        <td>10</td>
+                                        <td><span class="label label-success">8</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>玉米1602</td>
+                                        <td>20</td>
+                                        <td><span class="label label-danger">99</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>玉米1603</td>
+                                        <td>30</td>
+                                        <td><span class="label label-warning">67</span></td>
+                                        <td>
+                                            <button type="button" class="btn btn-block btn-default btn-xs">资产组合</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.container -->
     </div>
-    <!-- /.container -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="container">
-      <strong>Copyright &copy; 2016 <a href="https://github.com/NJUCitibankCup/">NJUCitibankCup</a>.</strong> All rights
-      reserved.
-    </div>
-    <!-- /.container -->
-  </footer>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="container">
+            <strong>Copyright &copy; 2016 <a href="https://github.com/NJUCitibankCup/">NJUCitibankCup</a>.</strong> All
+            rights
+            reserved.
+        </div>
+        <!-- /.container -->
+    </footer>
 </div>
 <!-- ./wrapper -->
 
@@ -211,5 +227,8 @@
 <script src="../vendor/admin-lte/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../vendor/admin-lte/dist/js/demo.js"></script>
+
+<!--Featured Js-->
+<script src="../vendor/admin-lte/dist/js/inedx.js"></script>
 </body>
 </html>
