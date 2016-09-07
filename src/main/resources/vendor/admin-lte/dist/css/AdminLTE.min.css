@@ -2163,11 +2163,12 @@ a:hover, a:active, a:focus {
     border-bottom-left-radius: 2px;
     display: block;
     float: left;
-    height: 108px;
-    width: 108px;
+    height: 90px;
+    width: 90px;
     text-align: center;
-    /*font-size: 45px;*/
-    /*line-height: 90px;*/
+    font-size: 45px;
+    line-height: 90px;
+    background: rgba(0, 0, 0, 0.2)
 }
 
 .info-box-icon > img {
@@ -2438,15 +2439,15 @@ a:hover, a:active, a:focus {
 .btn-app {
     border-radius: 3px;
     position: relative;
-    padding: 0px 0px;
-    margin: 0 0 0px 0px;
-    min-width: 40px;
-    height: 30px;
+    padding: 15px 5px;
+    margin: 0 0 10px 10px;
+    min-width: 80px;
+    height: 60px;
     text-align: center;
     color: #666;
     border: 1px solid #ddd;
     background-color: #f4f4f4;
-    font-size: 8px
+    font-size: 12px
 }
 
 .btn-app > .fa, .btn-app > .glyphicon, .btn-app > .ion {
@@ -2909,9 +2910,8 @@ table.text-center, table.text-center td, table.text-center th {
     padding: 5px 10px;
     background: #d2d6de;
     border: 1px solid #d2d6de;
-    margin: 5px 5px;
-    color: #444;
-    height: 30px;
+    margin: 5px 0 0 50px;
+    color: #444
 }
 
 .direct-chat-text:after, .direct-chat-text:before {
@@ -3118,8 +3118,7 @@ table.text-center, table.text-center td, table.text-center th {
 }
 
 .users-list-name {
-    font-family: "Microsoft YaHei";
-    font-weight: 500;
+    font-weight: 600;
     color: #444;
     overflow: hidden;
     white-space: nowrap;
@@ -3422,7 +3421,7 @@ table.text-center, table.text-center td, table.text-center th {
 }
 
 .login-box, .register-box {
-    width: 500px;
+    width: 360px;
     margin: 7% auto
 }
 
@@ -4587,7 +4586,7 @@ table.text-center, table.text-center td, table.text-center th {
     text-transform: uppercase
 }
 
-.bg-red, .bg-yellow, .bg-aqua, .bg-blue, .bg-light-blue, .bg-header, .bg-navy, .bg-teal, .bg-olive, .bg-lime, .bg-orange, .bg-fuchsia, .bg-purple, .bg-maroon, .bg-black, .bg-red-active, .bg-yellow-active, .bg-aqua-active, .bg-blue-active, .bg-light-blue-active, .bg-green-active, .bg-navy-active, .bg-teal-active, .bg-olive-active, .bg-lime-active, .bg-orange-active, .bg-fuchsia-active, .bg-purple-active, .bg-maroon-active, .bg-black-active, .callout.callout-danger, .callout.callout-warning, .callout.callout-info, .callout.callout-success, .alert-success, .alert-danger, .alert-error, .alert-warning, .alert-info, .label-danger, .label-info, .label-warning, .label-primary, .label-success, .modal-primary .modal-body, .modal-primary .modal-header, .modal-primary .modal-footer, .modal-warning .modal-body, .modal-warning .modal-header, .modal-warning .modal-footer, .modal-info .modal-body, .modal-info .modal-header, .modal-info .modal-footer, .modal-success .modal-body, .modal-success .modal-header, .modal-success .modal-footer, .modal-danger .modal-body, .modal-danger .modal-header, .modal-danger .modal-footer {
+.bg-red, .bg-yellow, .bg-aqua, .bg-blue, .bg-light-blue, .bg-green, .bg-navy, .bg-teal, .bg-olive, .bg-lime, .bg-orange, .bg-fuchsia, .bg-purple, .bg-maroon, .bg-black, .bg-red-active, .bg-yellow-active, .bg-aqua-active, .bg-blue-active, .bg-light-blue-active, .bg-green-active, .bg-navy-active, .bg-teal-active, .bg-olive-active, .bg-lime-active, .bg-orange-active, .bg-fuchsia-active, .bg-purple-active, .bg-maroon-active, .bg-black-active, .callout.callout-danger, .callout.callout-warning, .callout.callout-info, .callout.callout-success, .alert-success, .alert-danger, .alert-error, .alert-warning, .alert-info, .label-danger, .label-info, .label-warning, .label-primary, .label-success, .modal-primary .modal-body, .modal-primary .modal-header, .modal-primary .modal-footer, .modal-warning .modal-body, .modal-warning .modal-header, .modal-warning .modal-footer, .modal-info .modal-body, .modal-info .modal-header, .modal-info .modal-footer, .modal-success .modal-body, .modal-success .modal-header, .modal-success .modal-footer, .modal-danger .modal-body, .modal-danger .modal-header, .modal-danger .modal-footer {
     color: #fff !important
 }
 
@@ -4624,7 +4623,7 @@ table.text-center, table.text-center td, table.text-center th {
     background-color: #3c8dbc !important
 }
 
-.bg-header, .callout.callout-success, .alert-success, .label-success, .modal-success .modal-body {
+.bg-green, .callout.callout-success, .alert-success, .label-success, .modal-success .modal-body {
     background-color: #00a65a !important
 }
 
@@ -4645,7 +4644,7 @@ table.text-center, table.text-center td, table.text-center th {
 }
 
 .bg-orange {
-    background-color: #EB7D1B !important
+    background-color: #ff851b !important
 }
 
 .bg-fuchsia {
