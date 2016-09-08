@@ -1,6 +1,7 @@
-package nju.citicup.common;
+package nju.citicup.common.entity;
 
-import javax.persistence.Entity;
+import nju.citicup.common.enumarate.OptionType;
+
 import javax.persistence.Transient;
 import java.util.Date;
 

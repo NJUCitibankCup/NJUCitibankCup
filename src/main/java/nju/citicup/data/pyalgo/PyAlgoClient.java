@@ -2,8 +2,8 @@ package nju.citicup.data.pyalgo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nju.citicup.common.BasicOptionInfo;
-import nju.citicup.common.OptionType;
+import nju.citicup.common.entity.BasicOptionInfo;
+import nju.citicup.common.enumarate.OptionType;
 import nju.citicup.common.util.DateUtil;
 import nju.citicup.data.future.FutureInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;

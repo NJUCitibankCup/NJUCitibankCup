@@ -1,4 +1,4 @@
-package nju.citicup.common;
+package nju.citicup.common.entity;
 
 import javax.persistence.Entity;
 
