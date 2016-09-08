@@ -3,6 +3,7 @@ package nju.citicup.data.pyalgo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nju.citicup.common.BasicOptionInfo;
+import nju.citicup.common.OptionType;
 import nju.citicup.common.util.Target2Date;
 import nju.citicup.data.future.FutureInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,7 @@ public class PyAlgoClient {
         String uri = serverAddress+"Eu?St={St}&startDate={startDate}" +
                 "&endDate={endDate}&K={K}&sigma={sigma}";
 
-        Map<String, Object> varList = new TreeMap<String, Object>();
-
-        varList.put("St", getFuturePrice(basicOptionInfo.getTarget()));
-        varList.put("startDate", basicOptionInfo.getTradeDate());
-        varList.put("endDate", Target2Date.target2Date(basicOptionInfo.getTarget()));
-        varList.put("K", basicOptionInfo.getExecutivePrice());
-        varList.put("sigma", 0.02);
+        Map<String, Object> varList = getVarList(basicOptionInfo);
 
         String result = restTemplate.getForObject(uri, String.class, varList);
         System.out.println(result);
@@ -63,14 +58,7 @@ public class PyAlgoClient {
         String uri = serverAddress+"Ba?St={St}&startDate={startDate}" +
                 "&endDate={endDate}&K={K}&sigma={sigma}&H={H}";
 
-        Map<String, Object> varList = new TreeMap<String, Object>();
-
-        varList.put("St", getFuturePrice(basicOptionInfo.getTarget()));
-        varList.put("startDate", basicOptionInfo.getTradeDate());
-        varList.put("endDate", Target2Date.target2Date(basicOptionInfo.getTarget()));
-        varList.put("K", basicOptionInfo.getExecutivePrice());
-        varList.put("sigma", 0.02);
-        varList.put("H", basicOptionInfo.getH());
+        Map<String, Object> varList = getVarList(basicOptionInfo);
 
         String result = restTemplate.getForObject(uri, String.class, varList);
         System.out.println(result);
@@ -103,12 +91,29 @@ public class PyAlgoClient {
         return 0.0;
     }
 
+
+    private Map<String, Object> getVarList(BasicOptionInfo basicOptionInfo){
+        Map<String, Object> varList = new TreeMap<String, Object>();
+
+        varList.put("St", getFuturePrice(basicOptionInfo.getTarget()));
+        varList.put("startDate", basicOptionInfo.getTradeDate());
+        varList.put("endDate", Target2Date.target2Date(basicOptionInfo.getTarget()));
+        varList.put("K", basicOptionInfo.getExecutivePrice());
+        varList.put("sigma", 0.02);
+
+        if(basicOptionInfo.getOptionType() == OptionType.Ba)
+            varList.put("H", basicOptionInfo.getH());
+
+        return varList;
+    }
+
     /**
      *
      * @param target 期权标的
      * @return 该期权的前收盘价
      */
     private double getFuturePrice(String target){
+
         return 0.0;
     }
 

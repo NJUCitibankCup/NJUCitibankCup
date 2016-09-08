@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 /**
  * Created by lenovo on 2016/9/7.
  */
-@Entity
 public class BasicFutureInfo {
 
     /*期货持仓量*/

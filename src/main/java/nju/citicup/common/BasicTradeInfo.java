@@ -6,7 +6,6 @@ import java.util.Date;
 /**
  * Created by lenovo on 2016/9/7.
  */
-@Entity
 public class BasicTradeInfo {
 
     /*调仓成本*/

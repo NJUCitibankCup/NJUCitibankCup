@@ -1,8 +1,13 @@
 package nju.citicup.data.future;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,39 +24,66 @@ public class FutureInfoClient {
 
 	/**
 	 * @param code 代表期货的编号 如M0(连续期货), M1601(2016年1月份的期货)
-	 * @return 对应编号的期货的实时数据
+	 * @return 对应编号的期货的昨日收盘数据
 	 */
-	public String getTemporaryInfo(String code){
+	public double getTemporaryInfo(String code){
 		RestTemplate restTemplate = new RestTemplate();
 		String uri = "http://hq.sinajs.cn/list={code}";
 		String result = restTemplate.getForObject(uri, String.class,code);
 		System.out.println(result);
-		return result;
+
+		/*代表了期货数据中 昨日收盘价为数据列表的第六个数据*/
+		int index = 5;
+		String[] splitList = result.split(",");
+		if(splitList.length < index){
+			System.out.println("期货实时数据获取出现问题");
+			return 0;
+		}
+
+		double yesterdayEndPrice = Double.parseDouble(splitList[index]);
+
+		return yesterdayEndPrice;
 	}
 
 
 	/**
 	 * @param code 代表期货的编号 如M0(连续期货), M1601(2016年1月份的期货)
-	 * @param kind 代表查看的历史期货数据的时间间隔类型 种类有 5 15 30 60和空字符串  分别代表 5min 15min 30min 60min和日K这些类
 	 * @return 对应编号的期货的历史数据(鉴于新浪期货api，返回值有可能为空)
 	 */
-	public String getHitoryInfo(String code, String kind){
+	public List<Double> getHistoryInfo(String code){
 		RestTemplate restTemplate = new RestTemplate();
-		String uri = "";
-		if(kind == "")
-			uri = "http://stock2.finance.sina.com.cn/futures/api/json.php/"
-				+ "IndexService.getInnerFuturesDailyKLine{kind}?symbol={code}";
-		else{
-			uri = "http://stock2.finance.sina.com.cn/futures/api/json.php/"
-					+ "IndexService.getInnerFuturesMiniKLine{kind}m?symbol={code}";
-		}
+		String uri ="http://stock2.finance.sina.com.cn/futures/api/json.php/"
+				+ "IndexService.getInnerFuturesDailyKLine?symbol={code}";
 
 		Map<String, String> varList = new TreeMap<String, String>();
-		varList.put("kind", kind);
 		varList.put("code", code);
 
 		String result = restTemplate.getForObject(uri, String.class,varList);
 		System.out.println(result);
-		return result;
+
+		ObjectMapper mapper = new ObjectMapper();
+		List<ArrayList<String>> tempList = new ArrayList<>();
+		try {
+			 tempList = mapper.readValue(result, new TypeReference<List<ArrayList<String>>>() {});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+		if(tempList == null || tempList.size() == 0){
+			System.out.println("期货历史数据获取出现问题");
+			return new ArrayList<Double>() ;
+
+		}
+
+		int index = 4;
+		List<Double> historyDataList = new ArrayList<>();
+
+		for(ArrayList<String> item: tempList){
+			String tempData = item.get(index);
+			historyDataList.add(Double.parseDouble(tempData));
+		}
+
+		return historyDataList;
 	}
 }

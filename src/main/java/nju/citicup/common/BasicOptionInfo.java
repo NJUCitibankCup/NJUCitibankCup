@@ -7,7 +7,6 @@ import java.util.Date;
 /**
  * Created by lenovo on 2016/9/7.
  */
-@Entity
 public class BasicOptionInfo {
 
     /*期权标的*/
