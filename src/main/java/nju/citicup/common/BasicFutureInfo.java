@@ -16,6 +16,9 @@ public class BasicFutureInfo {
     /*期货delta*/
     double delta;
 
+    /*某种期权标的的价格波动率*/
+    double sigma;
+
     public int getQuantity() {
         return quantity;
     }
@@ -38,5 +41,13 @@ public class BasicFutureInfo {
 
     public void setDelta(double delta) {
         this.delta = delta;
+    }
+
+    public double getSigma() {
+        return sigma;
+    }
+
+    public void setSigma(double sigma) {
+        this.sigma = sigma;
     }
 }

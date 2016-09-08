@@ -27,7 +27,6 @@ public class BasicOptionInfo {
     /*障碍系数*/
     double H;
 
-    @Transient
     /*期权价格*/
     double price;
 

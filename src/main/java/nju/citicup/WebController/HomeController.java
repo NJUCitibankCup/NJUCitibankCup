@@ -1,5 +1,6 @@
 package nju.citicup.WebController;
 
+import nju.citicup.common.util.DateUtil;
 import nju.citicup.data.TestEntity;
 import nju.citicup.data.TestRepository;
 import nju.citicup.data.future.FutureInfoClient;
@@ -39,5 +40,11 @@ public class HomeController {
     @ResponseBody
     public List<Double> TestAPI(String target){
         return futureInfoClient.getHistoryInfo(target);
+    }
+
+    @RequestMapping("/testDateUtil")
+    @ResponseBody
+    public String  TestDateUtil(String target){
+        return DateUtil.target2Date(target);
     }
 }

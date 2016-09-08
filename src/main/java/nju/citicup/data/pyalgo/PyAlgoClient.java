@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nju.citicup.common.BasicOptionInfo;
 import nju.citicup.common.OptionType;
-import nju.citicup.common.util.Target2Date;
+import nju.citicup.common.util.DateUtil;
 import nju.citicup.data.future.FutureInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -64,6 +63,15 @@ public class PyAlgoClient {
         System.out.println(result);
     }
 
+
+
+
+
+    /**
+     *
+     * @param target
+     * @return 计算得出的某种期权标的的价格波动率
+     */
     public double caculateSigma(String target){
 
         RestTemplate restTemplate = new RestTemplate();
@@ -87,17 +95,22 @@ public class PyAlgoClient {
 
         HttpEntity<String> formEntity = new HttpEntity<String>(jsonString, headers);
 
-        String result = restTemplate.postForObject(url, formEntity, String.class);
-        return 0.0;
+        double result = restTemplate.postForObject(url, formEntity, Double.class);
+        return result;
     }
 
 
+    /**
+     *
+     * @param basicOptionInfo
+     * @return 针对不同种类期权计算期权基本信息而提取出的公共块
+     */
     private Map<String, Object> getVarList(BasicOptionInfo basicOptionInfo){
         Map<String, Object> varList = new TreeMap<String, Object>();
 
         varList.put("St", getFuturePrice(basicOptionInfo.getTarget()));
-        varList.put("startDate", basicOptionInfo.getTradeDate());
-        varList.put("endDate", Target2Date.target2Date(basicOptionInfo.getTarget()));
+        varList.put("startDate", DateUtil.normalizeDate(basicOptionInfo.getTradeDate()));
+        varList.put("endDate", DateUtil.target2Date(basicOptionInfo.getTarget()));
         varList.put("K", basicOptionInfo.getExecutivePrice());
         varList.put("sigma", 0.02);
 
@@ -107,17 +120,26 @@ public class PyAlgoClient {
         return varList;
     }
 
+
+
     /**
      *
      * @param target 期权标的
      * @return 该期权的前收盘价
      */
     private double getFuturePrice(String target){
-
-        return 0.0;
+        return futureInfoClient.getTemporaryInfo(target);
     }
 
+
+
+
+    /**
+     *
+     * @param target 期权标的
+     * @return 该期权的历史收盘数据
+     */
     private List<Double> getFutureHistoryPrice(String target){
-        return new ArrayList<Double>();
+        return futureInfoClient.getHistoryInfo(target);
     }
 }
