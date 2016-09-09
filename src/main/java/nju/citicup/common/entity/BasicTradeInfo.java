@@ -1,11 +1,13 @@
 package nju.citicup.common.entity;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by lenovo on 2016/9/7.
  */
+@Entity
+@Table(name = "BasicTradeInfo")
 public class BasicTradeInfo {
 
     /*调仓成本*/
@@ -19,6 +21,20 @@ public class BasicTradeInfo {
 
     /*调仓数量*/
     int count;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    int id;
+
+    protected BasicTradeInfo() {
+    }
+
+    public BasicTradeInfo(double cost, String target, Date tradeDate, int count) {
+        this.cost = cost;
+        this.target = target;
+        this.tradeDate = tradeDate;
+        this.count = count;
+    }
 
     public double getCost() {
         return cost;

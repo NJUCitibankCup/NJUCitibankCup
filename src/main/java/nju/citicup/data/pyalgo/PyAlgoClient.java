@@ -69,9 +69,6 @@ public class PyAlgoClient {
     }
 
 
-
-
-
     /**
      *
      * @param target
@@ -101,6 +98,10 @@ public class PyAlgoClient {
 
 
         return result;
+    }
+
+    public void hedgeCriteria(String target){
+
     }
 
 

@@ -6,6 +6,7 @@ import nju.citicup.common.enumarate.OptionType;
 import nju.citicup.common.util.DateUtil;
 import nju.citicup.data.TestEntity;
 import nju.citicup.data.TestRepository;
+import nju.citicup.data.dao.FutureDao;
 import nju.citicup.data.future.FutureInfoClient;
 import nju.citicup.data.pyalgo.PyAlgoClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class HomeController {
 
     @Autowired
     PyAlgoClient pyAlgoClient;
+
+    @Autowired
+    FutureDao futureDao;
 
     @RequestMapping("/")
     public String home(){
@@ -76,5 +80,11 @@ public class HomeController {
     @ResponseBody
     public String TestSigmma(String target){
         return pyAlgoClient.caculateSigma(target);
+    }
+
+    @RequestMapping("/testJPA")
+    @ResponseBody
+    public List<BasicFutureInfo> TestJPA(){
+        return futureDao.findByTarget("M1609");
     }
 }

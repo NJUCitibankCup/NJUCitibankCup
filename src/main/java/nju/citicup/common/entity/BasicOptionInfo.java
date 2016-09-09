@@ -2,17 +2,21 @@ package nju.citicup.common.entity;
 
 import nju.citicup.common.enumarate.OptionType;
 
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by lenovo on 2016/9/7.
  */
+@Entity
+@Table(name = "BasicOptionInfo")
 public class BasicOptionInfo {
 
     /*期权标的*/
     String target;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     /*ID*/
     int id;
 
@@ -38,6 +42,10 @@ public class BasicOptionInfo {
     @Transient
     /*期权gamma*/
     double gamma;
+
+    protected BasicOptionInfo(){
+
+    }
 
     public BasicOptionInfo(String target, OptionType optionType, double executivePrice, Date tradeDate, double h) {
         this.target = target;
