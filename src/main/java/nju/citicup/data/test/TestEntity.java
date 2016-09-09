@@ -1,5 +1,5 @@
 // tag::sample[]
-package nju.citicup.data;
+package nju.citicup.data.test;
 
 import javax.persistence.*;
 
