@@ -39,6 +39,14 @@ public class BasicOptionInfo {
     /*期权gamma*/
     double gamma;
 
+    public BasicOptionInfo(String target, OptionType optionType, double executivePrice, Date tradeDate, double h) {
+        this.target = target;
+        this.optionType = optionType;
+        this.executivePrice = executivePrice;
+        this.tradeDate = tradeDate;
+        H = h;
+    }
+
     public String getTarget() {
         return target;
     }

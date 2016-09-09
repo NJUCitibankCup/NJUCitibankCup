@@ -1,13 +1,18 @@
 package nju.citicup.WebController;
 
+import nju.citicup.common.entity.BasicFutureInfo;
+import nju.citicup.common.entity.BasicOptionInfo;
+import nju.citicup.common.enumarate.OptionType;
 import nju.citicup.common.util.DateUtil;
 import nju.citicup.data.TestEntity;
 import nju.citicup.data.TestRepository;
 import nju.citicup.data.future.FutureInfoClient;
+import nju.citicup.data.pyalgo.PyAlgoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.util.DartUtils;
 
 import java.util.List;
 
@@ -22,6 +27,9 @@ public class HomeController {
 
     @Autowired
     FutureInfoClient futureInfoClient;
+
+    @Autowired
+    PyAlgoClient pyAlgoClient;
 
     @RequestMapping("/")
     public String home(){
@@ -46,5 +54,27 @@ public class HomeController {
     @ResponseBody
     public String  TestDateUtil(String target){
         return DateUtil.target2Date(target);
+    }
+
+    @RequestMapping("/testEu")
+    @ResponseBody
+    public String TestEu(String target, double executivePrice, String date){
+        BasicOptionInfo temple = new BasicOptionInfo(target, OptionType.Eu, executivePrice,
+                DateUtil.str2Date(date),0);
+        return pyAlgoClient.getEuOptionInfo(temple);
+    }
+
+    @RequestMapping("/testBa")
+    @ResponseBody
+    public String TestBa(String target, double executivePrice, String date, double H){
+        BasicOptionInfo temple = new BasicOptionInfo(target, OptionType.Ba, executivePrice,
+                DateUtil.str2Date(date),H);
+        return pyAlgoClient.getBaOptionInfo(temple);
+    }
+
+    @RequestMapping("/testSigmma")
+    @ResponseBody
+    public String TestSigmma(String target){
+        return pyAlgoClient.caculateSigma(target);
     }
 }
