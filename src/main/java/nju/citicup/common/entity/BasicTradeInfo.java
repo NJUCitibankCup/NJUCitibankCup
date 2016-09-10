@@ -1,6 +1,7 @@
 package nju.citicup.common.entity;
 
 import javax.persistence.*;
+import javax.persistence.criteria.Fetch;
 import java.util.Date;
 
 /**
@@ -14,13 +15,18 @@ public class BasicTradeInfo {
     double cost;
 
     /*调仓期货标的*/
-    String target;
+    String targetId;
 
     /*调仓日期*/
     Date tradeDate;
 
     /*调仓数量*/
     int count;
+
+    @ManyToOne
+    @JoinColumn(name = "target")
+    BasicFutureInfo basicFutureInfo;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,9 +35,9 @@ public class BasicTradeInfo {
     protected BasicTradeInfo() {
     }
 
-    public BasicTradeInfo(double cost, String target, Date tradeDate, int count) {
+    public BasicTradeInfo(double cost, String targetId, Date tradeDate, int count) {
         this.cost = cost;
-        this.target = target;
+        this.targetId = targetId;
         this.tradeDate = tradeDate;
         this.count = count;
     }
@@ -44,12 +50,12 @@ public class BasicTradeInfo {
         this.cost = cost;
     }
 
-    public String getTarget() {
-        return target;
+    public String getTargetId() {
+        return targetId;
     }
 
-    public void setTarget(String target) {
-        this.target = target;
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 
     public Date getTradeDate() {
@@ -66,5 +72,14 @@ public class BasicTradeInfo {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+
+    public BasicFutureInfo getBasicFutureInfo() {
+        return basicFutureInfo;
+    }
+
+    public void setBasicFutureInfo(BasicFutureInfo basicFutureInfo) {
+        this.basicFutureInfo = basicFutureInfo;
     }
 }

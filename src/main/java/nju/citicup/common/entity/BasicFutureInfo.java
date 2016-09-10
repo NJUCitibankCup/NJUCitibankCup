@@ -1,9 +1,9 @@
 package nju.citicup.common.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lenovo on 2016/9/7.
@@ -24,6 +24,9 @@ public class BasicFutureInfo {
 
     /*某种期权标的的价格波动率*/
     double sigma;
+
+    @OneToMany(mappedBy = "basicFutureInfo", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    List<BasicTradeInfo> tradeInfos = new ArrayList<>();
 
     protected BasicFutureInfo() {
     }
@@ -66,5 +69,19 @@ public class BasicFutureInfo {
 
     public void setSigma(double sigma) {
         this.sigma = sigma;
+    }
+
+
+    public List<BasicTradeInfo> getTradeInfos() {
+        return tradeInfos;
+    }
+
+    public void setTradeInfos(List<BasicTradeInfo> tradeInfos) {
+        this.tradeInfos = tradeInfos;
+    }
+
+    public void addTradeInfo(BasicTradeInfo basicTradeInfo){
+        this.tradeInfos.add(basicTradeInfo);
+        basicTradeInfo.setBasicFutureInfo(this);
     }
 }

@@ -3,9 +3,14 @@ package nju.citicup.data.pyalgo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import nju.citicup.common.OptionExtraInfo;
+import nju.citicup.common.entity.BaOptionInfo;
+import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
 import nju.citicup.common.enumarate.OptionType;
 import nju.citicup.common.util.DateUtil;
+import nju.citicup.data.dao.FutureDao;
+import nju.citicup.data.dao.OptionDao;
 import nju.citicup.data.future.FutureInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +22,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +37,12 @@ public class PyAlgoClient {
     @Autowired
     FutureInfoClient futureInfoClient;
 
+    @Autowired
+    FutureDao futureDao;
+
+    @Autowired
+    OptionDao optionDao;
+
     @Value("${citialgo.server.address}")
     private String serverAddress;
 
@@ -38,36 +50,33 @@ public class PyAlgoClient {
      *
      * @param basicOptionInfo 基础期权信息
      */
-    public String getEuOptionInfo(BasicOptionInfo basicOptionInfo){
+    public OptionExtraInfo getOptionInfo(BasicOptionInfo basicOptionInfo){
         RestTemplate restTemplate = new RestTemplate();
 
-        String uri = serverAddress+"Eu?St={St}&startDate={startDate}" +
+        String uri = "";
+        if(basicOptionInfo instanceof BaOptionInfo)
+            uri = serverAddress+"Ba?St={St}&startDate={startDate}" +
+                    "&endDate={endDate}&K={K}&sigmma={sigmma}&H={H}";
+
+        else
+             uri = serverAddress+"Eu?St={St}&startDate={startDate}" +
                 "&endDate={endDate}&K={K}&sigmma={sigmma}";
 
         Map<String, Object> varList = getVarList(basicOptionInfo);
 
         String result = restTemplate.getForObject(uri, String.class, varList);
         System.out.println(result);
-        return result;
+
+        ObjectMapper mapper = new ObjectMapper();
+        OptionExtraInfo optionExtraInfo = null;
+        try {
+            optionExtraInfo = mapper.readValue(result, OptionExtraInfo.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return optionExtraInfo;
     }
-
-    /**
-     *
-     * @param basicOptionInfo 基础期权信息
-     */
-    public String getBaOptionInfo(BasicOptionInfo basicOptionInfo){
-        RestTemplate restTemplate = new RestTemplate();
-
-        String uri = serverAddress+"Ba?St={St}&startDate={startDate}" +
-                "&endDate={endDate}&K={K}&sigmma={sigmma}&H={H}";
-
-        Map<String, Object> varList = getVarList(basicOptionInfo);
-
-        String result = restTemplate.getForObject(uri, String.class, varList);
-        System.out.println(result);
-        return result;
-    }
-
 
     /**
      *
@@ -95,12 +104,57 @@ public class PyAlgoClient {
         map.put("priceList", (List<String>) Arrays.asList(jsonStr) );
 
         String result = restTemplate.postForObject(url, map, String.class);
+        double convertResult = Double.parseDouble(result);
+        System.out.println(futureDao.setSigma(target, convertResult));
 
 
         return result;
     }
 
-    public void hedgeCriteria(String target){
+    /**
+     *
+     * @param lowerGamma 用户选定的一个gamma
+     * @param optionList 用户选定的期权列表
+     * @param target 期权标的
+     */
+    public void hedgeCriteria(double lowerGamma, List<BasicOptionInfo> optionList, String target){
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = serverAddress + "hedge?number={number}&totalDelta={totalDelta}" +
+                "&lowerGamma={lowerGamma}&upperGamma={upperGamma}&St={St}" +
+                "&startDate={startDate}&endDate={endDate}";
+
+        Map<String, Object> varList = new TreeMap<String, Object>();
+
+        BasicFutureInfo basicFutureInfo = futureDao.findOne(target);
+        int number = basicFutureInfo.getQuantity();
+
+        double totalDelta = 0;
+        double totalGamma = 0;
+
+        for(BasicOptionInfo optionInfo: optionList){
+            totalDelta += optionInfo.getDelta();
+            totalGamma += optionInfo.getGamma();
+        }
+
+        totalDelta += basicFutureInfo.getDelta()*number;
+        double upperGamma = totalGamma;
+
+        double St = getFuturePrice(target);
+
+        String startDate = futureInfoClient.getPrimaryDate(target);
+        String endDate = DateUtil.target2Date(target);
+
+        varList.put("number", number);
+        varList.put("totalDelta", totalDelta);
+        varList.put("lowerGamma", lowerGamma);
+        varList.put("upperGamma", upperGamma);
+        varList.put("St", St);
+        varList.put("startDate", startDate);
+        varList.put("endDate", endDate);
+
+        String result = restTemplate.getForObject(url, String.class, varList);
+        System.out.println(result);
 
     }
 
@@ -117,10 +171,13 @@ public class PyAlgoClient {
         varList.put("startDate", DateUtil.normalizeDate(basicOptionInfo.getTradeDate()));
         varList.put("endDate", DateUtil.target2Date(basicOptionInfo.getTarget()));
         varList.put("K", basicOptionInfo.getExecutivePrice());
-        varList.put("sigmma", 5);
+        varList.put("sigmma", getFutureSigmma(basicOptionInfo.getTarget()));
 
-        if(basicOptionInfo.getOptionType() == OptionType.Ba)
-            varList.put("H", basicOptionInfo.getH());
+        if(basicOptionInfo instanceof BaOptionInfo){
+            BaOptionInfo baOptionInfo = (BaOptionInfo) basicOptionInfo;
+            varList.put("H", baOptionInfo.getH());
+        }
+
 
         return varList;
     }
@@ -139,7 +196,10 @@ public class PyAlgoClient {
     }
 
 
-
+    private double getFutureSigmma(String target){
+        BasicFutureInfo basicFutureInfo = futureDao.findOne(target);
+        return basicFutureInfo.getSigma();
+    }
 
     /**
      *

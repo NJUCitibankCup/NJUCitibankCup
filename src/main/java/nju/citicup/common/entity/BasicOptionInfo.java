@@ -9,7 +9,12 @@ import java.util.Date;
  * Created by lenovo on 2016/9/7.
  */
 @Entity
-@Table(name = "BasicOptionInfo")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Table(name="BasicOptionInfo")
+@DiscriminatorColumn(name="optionType",
+        discriminatorType = DiscriminatorType.STRING,
+        length=30)
+@DiscriminatorValue("Eu")
 public class BasicOptionInfo {
 
     /*期权标的*/
@@ -20,17 +25,11 @@ public class BasicOptionInfo {
     /*ID*/
     int id;
 
-    /*期权种类*/
-    OptionType optionType;
-
     /*行权价格*/
     double executivePrice;
 
     /*成交日期*/
     Date tradeDate;
-
-    /*障碍系数*/
-    double H;
 
     /*期权价格*/
     double price;
@@ -47,20 +46,16 @@ public class BasicOptionInfo {
 
     }
 
-    public BasicOptionInfo(String target, OptionType optionType, double executivePrice, Date tradeDate, double h) {
+    public BasicOptionInfo(String target, double executivePrice, Date tradeDate) {
         this.target = target;
-        this.optionType = optionType;
         this.executivePrice = executivePrice;
         this.tradeDate = tradeDate;
-        this.H = h;
     }
 
-    public BasicOptionInfo(String target, OptionType optionType, double executivePrice, Date tradeDate, double h, double price) {
+    public BasicOptionInfo(String target, double executivePrice, Date tradeDate, double price) {
         this.target = target;
-        this.optionType = optionType;
         this.executivePrice = executivePrice;
         this.tradeDate = tradeDate;
-        this.H = h;
         this.price = price;
     }
 
@@ -78,14 +73,6 @@ public class BasicOptionInfo {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public OptionType getOptionType() {
-        return optionType;
-    }
-
-    public void setOptionType(OptionType optionType) {
-        this.optionType = optionType;
     }
 
     public double getExecutivePrice() {
@@ -128,11 +115,16 @@ public class BasicOptionInfo {
         this.gamma = gamma;
     }
 
-    public double getH() {
-        return H;
-    }
-
-    public void setH(double h) {
-        H = h;
+    @Override
+    public String toString() {
+        return "BasicOptionInfo{" +
+                "target='" + target + '\'' +
+                ", id=" + id +
+                ", executivePrice=" + executivePrice +
+                ", tradeDate=" + tradeDate +
+                ", price=" + price +
+                ", delta=" + delta +
+                ", gamma=" + gamma +
+                '}';
     }
 }
