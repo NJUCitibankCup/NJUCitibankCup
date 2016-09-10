@@ -2,7 +2,7 @@
  * Created by Alan on 2016/9/7.
  */
 
-/*-------------------------------URL操作-------------------------------------*/
+/*-------------------------------URL鎿嶄綔-------------------------------------*/
 window.host = "http://";
 window.capitalUrl = host + "capital/capital.html";
 window.logUrl = host + "log/log.html";
@@ -15,7 +15,7 @@ function addParams(url, key, value) {
 }
 
 /**
- * 转换map
+ * 杞崲map
  * @param key
  * @param value
  * @returns {string}
@@ -25,7 +25,7 @@ function transMap(key, value) {
 }
 
 /**
- * 获得参数
+ * 鑾峰緱鍙傛暟
  * @param sHref
  * @param sArgName
  * @returns {string}
@@ -49,9 +49,9 @@ function getParam(sHref, sArgName) {
     return retval;
 }
 
-/*-------------------------------DOM操作-------------------------------------*/
+/*-------------------------------DOM鎿嶄綔-------------------------------------*/
 /**
- * 替换html模版
+ * 鏇挎崲html妯＄増
  * @param resource
  * @param params
  * @param data
@@ -63,9 +63,9 @@ function replaceTemplate(resource, params, data) {
     return resource;
 }
 
-/*-------------------------------Http操作-------------------------------------*/
+/*-------------------------------Http鎿嶄綔-------------------------------------*/
 function response(json) {
-    //打印返回
+    //鎵撳嵃杩斿洖
     console.log(json);
 
     var result = json.condition;
