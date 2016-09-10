@@ -52,7 +52,16 @@ public class BasicOptionInfo {
         this.optionType = optionType;
         this.executivePrice = executivePrice;
         this.tradeDate = tradeDate;
-        H = h;
+        this.H = h;
+    }
+
+    public BasicOptionInfo(String target, OptionType optionType, double executivePrice, Date tradeDate, double h, double price) {
+        this.target = target;
+        this.optionType = optionType;
+        this.executivePrice = executivePrice;
+        this.tradeDate = tradeDate;
+        this.H = h;
+        this.price = price;
     }
 
     public String getTarget() {

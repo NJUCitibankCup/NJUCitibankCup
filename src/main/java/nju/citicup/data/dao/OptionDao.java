@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface OptionDao extends CrudRepository<BasicOptionInfo, Integer> {
     List<BasicOptionInfo> findByTarget(String target);
+
 }
