@@ -60,4 +60,20 @@ public class NjuCitiCupApplicationTests {
 			System.out.println(tradeInfo.toString());
 	}
 
+	@Test
+	public void testJson(){
+		BasicOptionInfo basicOptionInfo = new BasicOptionInfo("M1611", 5000, DateUtil.str2Date("2016-01-11"));
+		BaOptionInfo baOptionInfo = new BaOptionInfo("M1611", 5000, DateUtil.str2Date("2016-01-11"),6);
+		List<BasicOptionInfo> list = new ArrayList<>();
+		list.add(basicOptionInfo);
+		list.add(baOptionInfo);
+		pyAlgoClient.drawVarGraph(list);
+	}
+
+
+	@Test
+	public void testSigmma(){
+		System.out.println(pyAlgoClient.caculateSigma("M1611"));
+	}
+
 }

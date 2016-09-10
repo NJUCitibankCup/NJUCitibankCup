@@ -3,7 +3,9 @@ package nju.citicup.data.pyalgo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import nju.citicup.common.BaOptionGraphInfo;
 import nju.citicup.common.OptionExtraInfo;
+import nju.citicup.common.OptionGraphInfo;
 import nju.citicup.common.entity.BaOptionInfo;
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
@@ -23,10 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by lenovo on 2016/9/7.
@@ -47,7 +46,7 @@ public class PyAlgoClient {
     private String serverAddress;
 
     /**
-     *
+     * 获取期权附加信息(price delta gamma)
      * @param basicOptionInfo 基础期权信息
      */
     public OptionExtraInfo getOptionInfo(BasicOptionInfo basicOptionInfo){
@@ -55,12 +54,12 @@ public class PyAlgoClient {
 
         String uri = "";
         if(basicOptionInfo instanceof BaOptionInfo)
-            uri = serverAddress+"Ba?St={St}&startDate={startDate}" +
-                    "&endDate={endDate}&K={K}&sigmma={sigmma}&H={H}";
+            uri = serverAddress+"Ba?st={St}&startDate={startDate}" +
+                    "&endDate={endDate}&k={K}&sigmma={sigmma}&h={H}";
 
         else
-             uri = serverAddress+"Eu?St={St}&startDate={startDate}" +
-                "&endDate={endDate}&K={K}&sigmma={sigmma}";
+             uri = serverAddress+"Eu?st={St}&startDate={startDate}" +
+                "&endDate={endDate}&k={K}&sigmma={sigmma}";
 
         Map<String, Object> varList = getVarList(basicOptionInfo);
 
@@ -121,7 +120,7 @@ public class PyAlgoClient {
         RestTemplate restTemplate = new RestTemplate();
 
         String url = serverAddress + "hedge?number={number}&totalDelta={totalDelta}" +
-                "&lowerGamma={lowerGamma}&upperGamma={upperGamma}&St={St}" +
+                "&lowerGamma={lowerGamma}&upperGamma={upperGamma}&st={St}" +
                 "&startDate={startDate}&endDate={endDate}";
 
         Map<String, Object> varList = new TreeMap<String, Object>();
@@ -155,6 +154,49 @@ public class PyAlgoClient {
 
         String result = restTemplate.getForObject(url, String.class, varList);
         System.out.println(result);
+
+    }
+
+    public void drawVarGraph(List<BasicOptionInfo> optionInfoList){
+        RestTemplate restTemplate = new RestTemplate();
+        String url = serverAddress+ "varGraph";
+
+        List<OptionGraphInfo> graphInfos = new ArrayList<>();
+        for(BasicOptionInfo basicOptionInfo: optionInfoList){
+            double St = getFuturePrice(basicOptionInfo.getTarget());
+            double K = basicOptionInfo.getExecutivePrice();
+            String startDate = DateUtil.normalizeDate(basicOptionInfo.getTradeDate());
+            String endDate = DateUtil.target2Date(basicOptionInfo.getTarget());
+            double sigmma = getFutureSigmma(basicOptionInfo.getTarget());
+
+            if(basicOptionInfo instanceof BaOptionInfo){
+                double H = ((BaOptionInfo) basicOptionInfo).getH();
+                graphInfos.add(new BaOptionGraphInfo(St, K, startDate, endDate, sigmma, H));
+            }else{
+                graphInfos.add(new OptionGraphInfo(St, K, startDate, endDate, sigmma));
+            }
+        }
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            String jsonStr = "";
+            try {
+                    jsonStr = mapper.writeValueAsString(graphInfos);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            System.out.println();
+            System.out.println(jsonStr);
+            System.out.println();
+
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+            map.put("optionList", (List<String>) Arrays.asList(jsonStr) );
+
+            String result = restTemplate.postForObject(url, map, String.class);
+            System.out.println(result);
+
+
+
 
     }
 
