@@ -3,7 +3,7 @@
  */
 
 /*-------------------------------URL操作-------------------------------------*/
-window.host = "http://";
+window.host = "http://120.27.117.222";
 window.capitalUrl = host + "capital/capital.html";
 window.logUrl = host + "log/log.html";
 
