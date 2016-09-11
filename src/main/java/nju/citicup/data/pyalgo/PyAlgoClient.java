@@ -75,7 +75,7 @@ public class PyAlgoClient {
      * @param target
      * @return 计算得出的某种期权标的的价格波动率
      */
-    public String caculateSigma(String target){
+    public double caculateSigma(String target){
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -97,10 +97,8 @@ public class PyAlgoClient {
 
         String result = restTemplate.postForObject(url, map, String.class);
         double convertResult = Double.parseDouble(result);
-        System.out.println(futureDao.setSigma(target, convertResult));
-
-
-        return result;
+        System.out.println("Sigmma: "+convertResult);
+        return convertResult;
     }
 
     /**
@@ -187,10 +185,6 @@ public class PyAlgoClient {
 
             String result = restTemplate.postForObject(url, map, String.class);
             System.out.println(result);
-
-
-
-
     }
 
 

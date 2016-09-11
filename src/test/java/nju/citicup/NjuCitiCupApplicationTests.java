@@ -6,6 +6,7 @@ import nju.citicup.common.entity.BasicOptionInfo;
 import nju.citicup.common.entity.BasicTradeInfo;
 import nju.citicup.common.util.DateUtil;
 import nju.citicup.data.dao.FutureDao;
+import nju.citicup.data.impl.FutureConfigDao;
 import nju.citicup.data.impl.OptionConfigDao;
 import nju.citicup.data.dao.OptionDao;
 import nju.citicup.data.dao.TradeDao;
@@ -42,6 +43,9 @@ public class NjuCitiCupApplicationTests {
 	OptionConfigDao optionConfigDao;
 
 	@Autowired
+	FutureConfigDao futureConfigDao;
+
+	@Autowired
 	TradeDao tradeDao;
 
 	@Test
@@ -76,7 +80,7 @@ public class NjuCitiCupApplicationTests {
 
 	@Test
 	public void testSigmma(){
-		System.out.println(pyAlgoClient.caculateSigma("M1611"));
+		futureConfigDao.dailyUpdateSigmma("M1611");
 	}
 
 }
