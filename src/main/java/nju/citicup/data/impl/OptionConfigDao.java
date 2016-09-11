@@ -1,21 +1,16 @@
 package nju.citicup.data.impl;
 
-import nju.citicup.common.OptionExtraInfo;
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
-import nju.citicup.common.entity.BasicTradeInfo;
+import nju.citicup.common.jsonobj.OptionExtraInfo;
 import nju.citicup.data.dao.FutureDao;
 import nju.citicup.data.dao.OptionDao;
 import nju.citicup.data.pyalgo.PyAlgoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,43 +29,80 @@ public class OptionConfigDao {
     PyAlgoClient pyAlgoClient;
 
     /**
-     * 将期权信息(包括最终价格)确定后录入数据库中
-     * @param basicOptionInfo
+     * 用户在确定成交价格之后将期权录入数据库中
+     * @param basicOptionInfo 期权基础信息(行权价格和成交日期)
+     * @param target 期权标的
      */
-    public void insertOption(BasicOptionInfo basicOptionInfo){
-        OptionExtraInfo optionExtraInfo = pyAlgoClient.getOptionInfo(basicOptionInfo);
+    @Transactional
+    public void insertOneOption(BasicOptionInfo basicOptionInfo, String target){
+
+        OptionExtraInfo optionExtraInfo = pyAlgoClient.getOptionInfo(basicOptionInfo, target);
         basicOptionInfo.setPrice(optionExtraInfo.getPrice());
-        optionDao.save(basicOptionInfo);
+
+        BasicFutureInfo basicFutureInfo = futureDao.findOne(target);
+        basicFutureInfo.addOptionInfo(basicOptionInfo);
     }
 
     /**
-     * 根据某种期权标的获取对应的期权列表(已经计算好delta和gamma)
-     * @param target
-     * @return
+     * 供用户和期权公司进行价格商讨
+     * @param basicOptionInfo 期权基础信息(行权价格和成交日期)
+     * @param target 期权标的
+     * @return 期权价格
      */
-    public List<BasicOptionInfo> getOptionByTarget(String target){
-        List<BasicOptionInfo> tempList = optionDao.findByTarget(target);
-        List<BasicOptionInfo> resultList = new ArrayList<>();
+    public double getOptionPrice(BasicOptionInfo basicOptionInfo, String target){
+        OptionExtraInfo optionExtraInfo = pyAlgoClient.getOptionInfo(basicOptionInfo, target);
+        return optionExtraInfo.getPrice();
+    }
 
-        for(BasicOptionInfo basicOptionInfo: tempList){
-            resultList.add(getOptionById(basicOptionInfo.getId()));
+    @Transactional
+    public List<BasicOptionInfo> getOptionInfoListByTarget(String target){
+        BasicFutureInfo basicFutureInfo = futureDao.findOne(target);
+        List<BasicOptionInfo> basicOptionInfoList = basicFutureInfo.getOptionInfos();
+
+        for(BasicOptionInfo basicOptionInfo: basicOptionInfoList){
+            OptionExtraInfo optionExtraInfo = pyAlgoClient.getOptionInfo(basicOptionInfo, target);
+            basicOptionInfo.setGamma(optionExtraInfo.getGamma());
+            basicOptionInfo.setDelta(optionExtraInfo.getDelta());
         }
-        return resultList;
+
+        System.out.println("Target: "+target+"  OptionList's Siza: "+basicOptionInfoList.size());
+        return basicOptionInfoList;
     }
 
     /**
-     * 根据ID来找到期权的信息(一般是界面将ID传回来时使用这个)
+     * 根据具体的ID找出期权
      * @param id
      * @return
      */
-    public BasicOptionInfo getOptionById(int id){
-
+    @Transactional
+    public BasicOptionInfo getOptionInfoById(int id){
         BasicOptionInfo basicOptionInfo = optionDao.findOne(id);
-        OptionExtraInfo optionExtraInfo = pyAlgoClient.getOptionInfo(basicOptionInfo);
-        basicOptionInfo.setGamma(optionExtraInfo.getGamma());
+        BasicFutureInfo basicFutureInfo = basicOptionInfo.getBasicFutureInfo();
+        String target = basicFutureInfo.getTarget();
+
+        OptionExtraInfo optionExtraInfo = pyAlgoClient.getOptionInfo(basicOptionInfo, target);
         basicOptionInfo.setDelta(optionExtraInfo.getDelta());
+        basicOptionInfo.setGamma(optionExtraInfo.getGamma());
 
         return basicOptionInfo;
+    }
+
+    /**
+     * 用于界面上选择一定的期权之后进行操作
+     * @param idList
+     * @return
+     */
+    @Transactional
+    public List<BasicOptionInfo> getOptionInfoListByIdList(List<Integer> idList){
+        List<BasicOptionInfo> basicOptionInfoList = (List<BasicOptionInfo>) optionDao.findAll(idList);
+        BasicFutureInfo basicFutureInfo = basicOptionInfoList.get(0).getBasicFutureInfo();
+        String target = basicFutureInfo.getTarget();
+        for(BasicOptionInfo basicOptionInfo: basicOptionInfoList){
+            OptionExtraInfo optionExtraInfo = pyAlgoClient.getOptionInfo(basicOptionInfo, target);
+            basicOptionInfo.setDelta(optionExtraInfo.getDelta());
+            basicOptionInfo.setGamma(optionExtraInfo.getGamma());
+        }
+        return basicOptionInfoList;
     }
 
 }

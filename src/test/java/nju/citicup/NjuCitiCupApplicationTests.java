@@ -45,27 +45,34 @@ public class NjuCitiCupApplicationTests {
 	TradeDao tradeDao;
 
 	@Test
-	public void contextLoads() {
-		optionConfigDao.insertOption(new BasicOptionInfo("M1611", 5000, DateUtil.str2Date("2016-01-11")));
-		optionConfigDao.insertOption(new BaOptionInfo("M1611", 5000, DateUtil.str2Date("2016-01-11"),6));
+	public void testInsertOption(){
+		optionConfigDao.insertOneOption(new BasicOptionInfo(7000, DateUtil.str2Date("2016-06-12")), "M1609");
+		optionConfigDao.insertOneOption(new BaOptionInfo(9000, DateUtil.str2Date("2016-05-12"), 5), "M1609");
 	}
 
 	@Test
-	@Transactional
-	public void testInsert(){
-
+	public void testFindOptionListByTarget(){
+		List<BasicOptionInfo> optionInfoList = optionConfigDao.getOptionInfoListByTarget("M1609");
+		for(BasicOptionInfo basicOptionInfo: optionInfoList)
+			System.out.println(basicOptionInfo.toString());
 	}
 
 	@Test
-	public void testJson(){
-		BasicOptionInfo basicOptionInfo = new BasicOptionInfo("M1611", 5000, DateUtil.str2Date("2016-01-11"));
-		BaOptionInfo baOptionInfo = new BaOptionInfo("M1611", 5000, DateUtil.str2Date("2016-01-11"),6);
-		List<BasicOptionInfo> list = new ArrayList<>();
-		list.add(basicOptionInfo);
-		list.add(baOptionInfo);
-		pyAlgoClient.drawVarGraph(list, "M1611");
-	}
+	public void testFindOptionByID(){
 
+		System.out.println("Single");
+		BasicOptionInfo basicOptionInfo = optionConfigDao.getOptionInfoById(26);
+		System.out.println(basicOptionInfo.toString());
+
+		System.out.println("List");
+		List<Integer> idList = new ArrayList<>();
+		idList.add(26);
+		idList.add(27);
+
+		List<BasicOptionInfo> basicOptionInfoList = optionConfigDao.getOptionInfoListByIdList(idList);
+		for(BasicOptionInfo basicOptionInfo1: basicOptionInfoList)
+			System.out.println(basicOptionInfo1.toString());
+	}
 
 	@Test
 	public void testSigmma(){

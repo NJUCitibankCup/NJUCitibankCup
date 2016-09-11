@@ -17,9 +17,6 @@ import java.util.Date;
 @DiscriminatorValue("Eu")
 public class BasicOptionInfo {
 
-    /*期权标的*/
-    String target;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     /*ID*/
@@ -34,6 +31,10 @@ public class BasicOptionInfo {
     /*期权价格*/
     double price;
 
+    @ManyToOne
+    @JoinColumn(name = "target")
+    BasicFutureInfo basicFutureInfo;
+
     @Transient
     /*期权风险估计量*/
     double delta;
@@ -46,25 +47,15 @@ public class BasicOptionInfo {
 
     }
 
-    public BasicOptionInfo(String target, double executivePrice, Date tradeDate) {
-        this.target = target;
+    public BasicOptionInfo(double executivePrice, Date tradeDate) {
         this.executivePrice = executivePrice;
         this.tradeDate = tradeDate;
     }
 
-    public BasicOptionInfo(String target, double executivePrice, Date tradeDate, double price) {
-        this.target = target;
+    public BasicOptionInfo(double executivePrice, Date tradeDate, double price) {
         this.executivePrice = executivePrice;
         this.tradeDate = tradeDate;
         this.price = price;
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
     }
 
     public int getId() {
@@ -115,10 +106,18 @@ public class BasicOptionInfo {
         this.gamma = gamma;
     }
 
+    public BasicFutureInfo getBasicFutureInfo() {
+        return basicFutureInfo;
+    }
+
+    public void setBasicFutureInfo(BasicFutureInfo basicFutureInfo) {
+        this.basicFutureInfo = basicFutureInfo;
+    }
+
     @Override
     public String toString() {
         return "BasicOptionInfo{" +
-                "target='" + target + '\'' +
+                '\'' +
                 ", id=" + id +
                 ", executivePrice=" + executivePrice +
                 ", tradeDate=" + tradeDate +

@@ -18,13 +18,13 @@ public class BaOptionInfo extends BasicOptionInfo {
 
     }
 
-    public BaOptionInfo(String target, double executivePrice, Date tradeDate, double h) {
-        super(target, executivePrice, tradeDate);
+    public BaOptionInfo(double executivePrice, Date tradeDate, double h) {
+        super(executivePrice, tradeDate);
         H = h;
     }
 
-    public BaOptionInfo(String target, double executivePrice, Date tradeDate, double h, double price) {
-        super(target, executivePrice, tradeDate, price);
+    public BaOptionInfo(double executivePrice, Date tradeDate, double h, double price) {
+        super(executivePrice, tradeDate, price);
         H = h;
     }
 

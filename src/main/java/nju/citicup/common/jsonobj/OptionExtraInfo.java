@@ -1,4 +1,4 @@
-package nju.citicup.common;
+package nju.citicup.common.jsonobj;
 
 /**
  * Created by lenovo on 2016/9/10.

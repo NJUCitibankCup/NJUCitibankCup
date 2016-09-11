@@ -2,23 +2,18 @@ package nju.citicup.data.pyalgo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import nju.citicup.common.BaOptionGraphInfo;
-import nju.citicup.common.OptionExtraInfo;
-import nju.citicup.common.OptionGraphInfo;
+import nju.citicup.common.jsonobj.BaOptionGraphInfo;
+import nju.citicup.common.jsonobj.OptionExtraInfo;
+import nju.citicup.common.jsonobj.OptionGraphInfo;
 import nju.citicup.common.entity.BaOptionInfo;
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
-import nju.citicup.common.enumarate.OptionType;
 import nju.citicup.common.util.DateUtil;
 import nju.citicup.data.dao.FutureDao;
 import nju.citicup.data.dao.OptionDao;
 import nju.citicup.data.future.FutureInfoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -39,8 +34,6 @@ public class PyAlgoClient {
     @Autowired
     FutureDao futureDao;
 
-    @Autowired
-    OptionDao optionDao;
 
     @Value("${citialgo.server.address}")
     private String serverAddress;

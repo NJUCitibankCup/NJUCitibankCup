@@ -28,6 +28,9 @@ public class BasicFutureInfo {
     @OneToMany(mappedBy = "basicFutureInfo", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     List<BasicTradeInfo> tradeInfos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "basicFutureInfo", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    List<BasicOptionInfo> optionInfos = new ArrayList<>();
+
     protected BasicFutureInfo() {
     }
 
@@ -80,8 +83,21 @@ public class BasicFutureInfo {
         this.tradeInfos = tradeInfos;
     }
 
+    public List<BasicOptionInfo> getOptionInfos() {
+        return optionInfos;
+    }
+
+    public void setOptionInfos(List<BasicOptionInfo> optionInfos) {
+        this.optionInfos = optionInfos;
+    }
+
     public void addTradeInfo(BasicTradeInfo basicTradeInfo){
         this.tradeInfos.add(basicTradeInfo);
         basicTradeInfo.setBasicFutureInfo(this);
+    }
+
+    public void addOptionInfo(BasicOptionInfo basicOptionInfo){
+        this.optionInfos.add(basicOptionInfo);
+        basicOptionInfo.setBasicFutureInfo(this);
     }
 }

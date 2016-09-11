@@ -1,4 +1,6 @@
-package nju.citicup.common;
+package nju.citicup.common.jsonobj;
+
+import nju.citicup.common.jsonobj.OptionGraphInfo;
 
 /**
  * Created by lenovo on 2016/9/10.
