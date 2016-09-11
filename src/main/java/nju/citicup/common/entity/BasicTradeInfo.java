@@ -14,9 +14,6 @@ public class BasicTradeInfo {
     /*调仓成本*/
     double cost;
 
-    /*调仓期货标的*/
-    String targetId;
-
     /*调仓日期*/
     Date tradeDate;
 
@@ -24,7 +21,7 @@ public class BasicTradeInfo {
     int count;
 
     @ManyToOne
-    @JoinColumn(name = "target")
+    @JoinColumn(name = "targetId")
     BasicFutureInfo basicFutureInfo;
 
 
@@ -35,9 +32,8 @@ public class BasicTradeInfo {
     protected BasicTradeInfo() {
     }
 
-    public BasicTradeInfo(double cost, String targetId, Date tradeDate, int count) {
+    public BasicTradeInfo(double cost, Date tradeDate, int count) {
         this.cost = cost;
-        this.targetId = targetId;
         this.tradeDate = tradeDate;
         this.count = count;
     }
@@ -48,14 +44,6 @@ public class BasicTradeInfo {
 
     public void setCost(double cost) {
         this.cost = cost;
-    }
-
-    public String getTargetId() {
-        return targetId;
-    }
-
-    public void setTargetId(String targetId) {
-        this.targetId = targetId;
     }
 
     public Date getTradeDate() {

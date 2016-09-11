@@ -49,7 +49,7 @@ public class PyAlgoClient {
      * 获取期权附加信息(price delta gamma)
      * @param basicOptionInfo 基础期权信息
      */
-    public OptionExtraInfo getOptionInfo(BasicOptionInfo basicOptionInfo){
+    public OptionExtraInfo getOptionInfo(BasicOptionInfo basicOptionInfo, String target){
         RestTemplate restTemplate = new RestTemplate();
 
         String uri = "";
@@ -61,7 +61,7 @@ public class PyAlgoClient {
              uri = serverAddress+"Eu?st={St}&startDate={startDate}" +
                 "&endDate={endDate}&k={K}&sigmma={sigmma}";
 
-        Map<String, Object> varList = getVarList(basicOptionInfo);
+        Map<String, Object> varList = getVarList(basicOptionInfo, target);
 
         String result = restTemplate.getForObject(uri, String.class, varList);
         System.out.println(result);
@@ -157,17 +157,17 @@ public class PyAlgoClient {
 
     }
 
-    public void drawVarGraph(List<BasicOptionInfo> optionInfoList){
+    public void drawVarGraph(List<BasicOptionInfo> optionInfoList, String target){
         RestTemplate restTemplate = new RestTemplate();
         String url = serverAddress+ "varGraph";
 
         List<OptionGraphInfo> graphInfos = new ArrayList<>();
         for(BasicOptionInfo basicOptionInfo: optionInfoList){
-            double St = getFuturePrice(basicOptionInfo.getTarget());
+            double St = getFuturePrice(target);
             double K = basicOptionInfo.getExecutivePrice();
             String startDate = DateUtil.normalizeDate(basicOptionInfo.getTradeDate());
-            String endDate = DateUtil.target2Date(basicOptionInfo.getTarget());
-            double sigmma = getFutureSigmma(basicOptionInfo.getTarget());
+            String endDate = DateUtil.target2Date(target);
+            double sigmma = getFutureSigmma(target);
 
             if(basicOptionInfo instanceof BaOptionInfo){
                 double H = ((BaOptionInfo) basicOptionInfo).getH();
@@ -206,14 +206,14 @@ public class PyAlgoClient {
      * @param basicOptionInfo
      * @return 针对不同种类期权计算期权基本信息而提取出的公共块
      */
-    private Map<String, Object> getVarList(BasicOptionInfo basicOptionInfo){
+    private Map<String, Object> getVarList(BasicOptionInfo basicOptionInfo, String target){
         Map<String, Object> varList = new TreeMap<String, Object>();
 
-        varList.put("St", getFuturePrice(basicOptionInfo.getTarget()));
+        varList.put("St", getFuturePrice(target));
         varList.put("startDate", DateUtil.normalizeDate(basicOptionInfo.getTradeDate()));
-        varList.put("endDate", DateUtil.target2Date(basicOptionInfo.getTarget()));
+        varList.put("endDate", DateUtil.target2Date(target));
         varList.put("K", basicOptionInfo.getExecutivePrice());
-        varList.put("sigmma", getFutureSigmma(basicOptionInfo.getTarget()));
+        varList.put("sigmma", getFutureSigmma(target));
 
         if(basicOptionInfo instanceof BaOptionInfo){
             BaOptionInfo baOptionInfo = (BaOptionInfo) basicOptionInfo;

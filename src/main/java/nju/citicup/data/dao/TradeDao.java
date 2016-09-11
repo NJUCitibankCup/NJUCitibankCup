@@ -9,6 +9,4 @@ import javax.persistence.PersistenceUnit;
  * Created by lenovo on 2016/9/9.
  */
 public interface TradeDao extends CrudRepository<BasicTradeInfo, Integer> {
-
-
 }

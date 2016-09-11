@@ -1,9 +1,11 @@
-package nju.citicup.data.dao;
+package nju.citicup.data.impl;
 
 import nju.citicup.common.OptionExtraInfo;
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
 import nju.citicup.common.entity.BasicTradeInfo;
+import nju.citicup.data.dao.FutureDao;
+import nju.citicup.data.dao.OptionDao;
 import nju.citicup.data.pyalgo.PyAlgoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,9 +32,6 @@ public class OptionConfigDao {
 
     @Autowired
     PyAlgoClient pyAlgoClient;
-
-    @PersistenceContext
-    EntityManager entityManager;
 
     /**
      * 将期权信息(包括最终价格)确定后录入数据库中
@@ -74,10 +73,4 @@ public class OptionConfigDao {
         return basicOptionInfo;
     }
 
-    @Transactional
-    public void insertTradeInfo(BasicTradeInfo basicTradeInfo){
-//            BasicFutureInfo basicFutureInfo = futureDao.findOne(basicTradeInfo.getTarget());
-//            basicTradeInfo.setBasicFutureInfo(basicFutureInfo);
-            entityManager.persist(basicTradeInfo);
-    }
 }
