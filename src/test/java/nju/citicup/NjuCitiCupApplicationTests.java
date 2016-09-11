@@ -1,16 +1,14 @@
 package nju.citicup;
 
 import nju.citicup.common.entity.BaOptionInfo;
-import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
-import nju.citicup.common.entity.BasicTradeInfo;
 import nju.citicup.common.jsonobj.GammaVarObj;
 import nju.citicup.common.util.DateUtil;
-import nju.citicup.data.dao.FutureDao;
-import nju.citicup.data.impl.FutureConfigDao;
-import nju.citicup.data.impl.OptionConfigDao;
-import nju.citicup.data.dao.OptionDao;
-import nju.citicup.data.dao.TradeDao;
+import nju.citicup.data.dao.baiscdao.FutureDao;
+import nju.citicup.data.dao.configdao.FutureConfigDao;
+import nju.citicup.data.dao.configdao.OptionConfigDao;
+import nju.citicup.data.dao.baiscdao.OptionDao;
+import nju.citicup.data.dao.baiscdao.TradeDao;
 import nju.citicup.data.pyalgo.PyAlgoClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +18,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 

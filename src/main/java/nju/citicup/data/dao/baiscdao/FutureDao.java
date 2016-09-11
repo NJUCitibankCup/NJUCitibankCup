@@ -1,4 +1,4 @@
-package nju.citicup.data.dao;
+package nju.citicup.data.dao.baiscdao;
 
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;

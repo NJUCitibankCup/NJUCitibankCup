@@ -1,8 +1,8 @@
-package nju.citicup.data.impl;
+package nju.citicup.data.dao.configdao;
 
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicTradeInfo;
-import nju.citicup.data.dao.FutureDao;
+import nju.citicup.data.dao.baiscdao.FutureDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
