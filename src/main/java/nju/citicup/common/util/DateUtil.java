@@ -9,6 +9,13 @@ import java.util.Date;
  */
 public class DateUtil {
 
+    public static Date getCurrentDate(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date today = new Date();
+        String dateStr = formatter.format(today);
+        return DateUtil.str2Date(dateStr);
+    }
+
     public static String target2Date(String target){
         int length = target.length();
         String dateStr = target.substring(length-4, length);

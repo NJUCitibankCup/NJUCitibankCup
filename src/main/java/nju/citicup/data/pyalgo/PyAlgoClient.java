@@ -2,7 +2,9 @@ package nju.citicup.data.pyalgo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nju.citicup.common.entity.BasicTradeInfo;
 import nju.citicup.common.jsonobj.BaOptionGraphInfo;
+import nju.citicup.common.jsonobj.GammaVarObj;
 import nju.citicup.common.jsonobj.OptionExtraInfo;
 import nju.citicup.common.jsonobj.OptionGraphInfo;
 import nju.citicup.common.entity.BaOptionInfo;
@@ -107,7 +109,7 @@ public class PyAlgoClient {
      * @param optionList 用户选定的期权列表
      * @param target 期权标的
      */
-    public void hedgeCriteria(double lowerGamma, List<BasicOptionInfo> optionList, String target){
+    public BasicTradeInfo hedgeCriteria(double lowerGamma, List<BasicOptionInfo> optionList, String target){
         RestTemplate restTemplate = new RestTemplate();
 
         String url = serverAddress + "hedge?number={number}&totalDelta={totalDelta}" +
@@ -146,9 +148,21 @@ public class PyAlgoClient {
         String result = restTemplate.getForObject(url, String.class, varList);
         System.out.println(result);
 
+        int count = Integer.parseInt(result);
+        double cost = count* St;
+        Date tradeDate = DateUtil.getCurrentDate();
+
+        return new BasicTradeInfo(cost, tradeDate, count);
+
     }
 
-    public void drawVarGraph(List<BasicOptionInfo> optionInfoList, String target){
+    /**
+     * 根据一些选定的期权计算出一张图表的数据
+     * @param optionInfoList
+     * @param target
+     * @return
+     */
+    public GammaVarObj drawVarGraph(List<BasicOptionInfo> optionInfoList, String target){
         RestTemplate restTemplate = new RestTemplate();
         String url = serverAddress+ "varGraph";
 
@@ -185,6 +199,14 @@ public class PyAlgoClient {
 
             String result = restTemplate.postForObject(url, map, String.class);
             System.out.println(result);
+
+        GammaVarObj gammaVarObj = new GammaVarObj();
+        try {
+            gammaVarObj = mapper.readValue(result, GammaVarObj.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return gammaVarObj;
     }
 
 

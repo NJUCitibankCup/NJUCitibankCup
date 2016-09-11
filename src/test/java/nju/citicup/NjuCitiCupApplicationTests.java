@@ -4,6 +4,7 @@ import nju.citicup.common.entity.BaOptionInfo;
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
 import nju.citicup.common.entity.BasicTradeInfo;
+import nju.citicup.common.jsonobj.GammaVarObj;
 import nju.citicup.common.util.DateUtil;
 import nju.citicup.data.dao.FutureDao;
 import nju.citicup.data.impl.FutureConfigDao;
@@ -83,4 +84,22 @@ public class NjuCitiCupApplicationTests {
 		futureConfigDao.dailyUpdateSigmma("M1611");
 	}
 
+
+	@Test
+	public void testDrawGraph(){
+		BasicOptionInfo basicOptionInfo = new BasicOptionInfo(2000, DateUtil.str2Date(("2016-02-10")));
+		BaOptionInfo baOptionInfo = new BaOptionInfo(3000, DateUtil.str2Date("2016-05-12"), 5);
+		List<BasicOptionInfo> optionInfoList = new ArrayList<>();
+		optionInfoList.add(baOptionInfo);
+		optionInfoList.add(basicOptionInfo);
+
+		GammaVarObj gammaVarObj = pyAlgoClient.drawVarGraph(optionInfoList, "M1611");
+		List<Integer> lowerGammaList = gammaVarObj.getLowerGammaList();
+		List<Double> varList = gammaVarObj.getVarList();
+
+		for(int i=0; i<lowerGammaList.size(); i++){
+			System.out.println(lowerGammaList.get(i)+":"+varList.get(i));
+		}
+
+	}
 }
