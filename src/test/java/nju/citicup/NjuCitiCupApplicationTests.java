@@ -1,6 +1,8 @@
 package nju.citicup;
 
+import nju.citicup.bl.FutureNameMapper;
 import nju.citicup.common.entity.BaOptionInfo;
+import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
 import nju.citicup.common.jsonobj.GammaVarObj;
 import nju.citicup.common.util.DateUtil;
@@ -20,6 +22,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,6 +49,9 @@ public class NjuCitiCupApplicationTests {
 
 	@Autowired
 	TradeDao tradeDao;
+
+	@Autowired
+	FutureNameMapper futureNameMapper;
 
 	@Test
 	public void testInsertOption(){
@@ -98,5 +105,33 @@ public class NjuCitiCupApplicationTests {
 			System.out.println(lowerGammaList.get(i)+":"+varList.get(i));
 		}
 
+	}
+
+	@Test
+	public void testSingleFutureUpdate(){
+		System.out.println(pyAlgoClient.caculateSigma("RS1611"));
+	}
+
+	@Test
+	public void futureInfoUpdate(){
+		Map<String, String> mapper = futureNameMapper.getMapper();
+		Set<String> keyList = mapper.keySet();
+		String[] dateList = {"1701", "1703", "1705", "1707"};
+		for(String key: keyList){
+			for(int index = 0; index<dateList.length; index++){
+				String target = key + dateList[index];
+				futureDao.save(new BasicFutureInfo(target, 0));
+//				double sigmma = pyAlgoClient.caculateSigma(target);
+//				System.out.println("Target: "+target+"  Sigmma: "+ sigmma);
+			}
+		}
+
+	}
+
+	@Test
+	public void updateFutureSigmma(){
+		List<BasicFutureInfo> futureInfos = (List<BasicFutureInfo>) futureDao.findAll();
+		for(BasicFutureInfo basicFutureInfo: futureInfos)
+			futureConfigDao.dailyUpdateSigmma(basicFutureInfo.getTarget());
 	}
 }
