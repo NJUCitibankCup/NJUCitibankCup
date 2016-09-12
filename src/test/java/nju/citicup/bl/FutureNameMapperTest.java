@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,13 +20,12 @@ public class FutureNameMapperTest {
     FutureNameMapper mapper;
 
     @Test
-    public void getFuturesName() throws Exception {
-
+    public void convert() throws Exception {
+        assertThat(mapper.convert("A"),equalTo("大豆"));
+        assertThat(mapper.convert("大豆"),equalTo("A"));
+        assertThat(mapper.convert("A1701"),equalTo("大豆1701"));
+        assertThat(mapper.convert("大豆1701"),equalTo("A1701"));
     }
 
-    @Test
-    public void getFuturesId() throws Exception {
-
-    }
 
 }
