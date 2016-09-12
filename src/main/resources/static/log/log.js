@@ -18,6 +18,8 @@ function loadResource() {
             if (data != null) {
                 var quantity = data.quantity;
                 var averagePrice = data.average_price;
+                $('#futures-num').text(quantity);
+                $('#average-price').text(averagePrice);
                 var historyList = data.data;
                 for (var i = 0; i < historyList.length; i++) {
                     var date = historyList[i].date;
