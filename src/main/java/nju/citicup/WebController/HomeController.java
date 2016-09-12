@@ -1,7 +1,5 @@
 package nju.citicup.WebController;
 
-import nju.citicup.data.test.TestEntity;
-import nju.citicup.data.test.TestRepository;
 import nju.citicup.data.dao.baiscdao.FutureDao;
 import nju.citicup.data.future.FutureInfoClient;
 import nju.citicup.data.pyalgo.PyAlgoClient;
@@ -17,9 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HomeController {
 
     @Autowired
-    TestRepository testRepository;
-
-    @Autowired
     FutureInfoClient futureInfoClient;
 
     @Autowired
@@ -33,11 +28,4 @@ public class HomeController {
         return "redirect:/home.html";
     }
 
-    @RequestMapping("/add")
-    @ResponseBody
-    public TestEntity addTestEntity(){
-        TestEntity entity = new TestEntity("Wang","Xiaoming");
-        testRepository.save(entity);
-        return entity;
-    }
 }
