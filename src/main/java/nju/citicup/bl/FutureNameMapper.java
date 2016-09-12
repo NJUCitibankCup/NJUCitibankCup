@@ -24,7 +24,7 @@ public class FutureNameMapper {
 
     @PostConstruct
     protected void init(){
-        System.out.println(mapper);
+        
     }
 
     public String getFuturesName(String futuresId){
@@ -43,12 +43,5 @@ public class FutureNameMapper {
         this.mapper = mapper;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 }
