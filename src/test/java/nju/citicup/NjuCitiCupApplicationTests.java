@@ -134,4 +134,9 @@ public class NjuCitiCupApplicationTests {
 		for(BasicFutureInfo basicFutureInfo: futureInfos)
 			futureConfigDao.dailyUpdateSigmma(basicFutureInfo.getTarget());
 	}
+
+	@Test
+	public void findAllTarget(){
+		System.out.println(futureConfigDao.findAllTarget());
+	}
 }

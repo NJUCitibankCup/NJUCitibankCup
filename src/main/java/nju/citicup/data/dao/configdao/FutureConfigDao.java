@@ -26,6 +26,10 @@ public class FutureConfigDao {
         futureDao.setSigma(target, updatedSigmma);
     }
 
+    public List<String> findAllTarget(){
+        return futureDao.findAllTarget();
+    }
+
     public List<BasicFutureInfo> getAllBasicFutureInfo(){
         return (List<BasicFutureInfo>) futureDao.findAll();
     }
