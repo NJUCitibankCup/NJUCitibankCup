@@ -105,3 +105,60 @@ $('#confirmAdjustBtn').click(function(e){
 
 );
 
+var futuresID = getParam(location.href, "futures_id");
+var getHistoryUrl = "/api/capital";
+
+//loadResource();
+
+function loadResource() {
+    $.ajax({
+        url: window.host + getHistoryUrl,
+        data: {
+            futures_id: futuresID
+        },
+        timeout: 5000,
+        success: function (res) {
+            var data = response(res);
+            if (data != null) {
+                var cost = data.cost;
+                var delta = data.delta;
+                var safe=data.safe;
+                var historyList = data.data;
+                for (var i = 0; i < historyList.length; i++) {
+                    var due_date = historyList[i].due_date;
+                    var single_delta = historyList[i].delta;
+                    var sell_price = historyList[i].sell_price;
+                    var future_price= historyList[i].future_price;
+                    var single_cost= historylist[i].cost;
+                    loadHistory(date, price, historyQuantity);
+                }
+            }
+        }
+    });
+}
+
+var history_template =
+    '<tr> ' +
+    '<td>due_date</td> ' +
+    '<td>single_delta</td> ' +
+    '<td>sell_price</td> ' +
+    '<td>future_price</td> ' +
+    '<td>single_cost</td> ' +
+    '<td>sell_price</td> ' +
+    '<td><input type="checkbox" name="option_id_picker"></td>'+
+    '</tr>';
+
+/**
+ * 加载历史信息
+ * @param date
+ * @param price
+ * @param quantity
+ */
+function loadHistory(due_date, single_delta, se) {
+    var tags = ['due_date', 'single_delta', 'sell_price','future_price','single_cost','sell_price','<input type="checkbox" name="option_id_picker">'];
+    var data = [date, price, quantity];
+    var template = replaceTemplate(history_template, tags, data);
+
+    $('#data-table').append(template);
+}
+
