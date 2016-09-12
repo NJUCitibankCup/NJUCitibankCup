@@ -99,11 +99,11 @@
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
-                                <h3>10</h3>
+                                <h3 id="cost">10</h3>
                                 <p>成本Cost</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-th"></i>
+                                <i class="fa fa-money"></i>
                             </div>
                         </div>
                     </div>
@@ -112,11 +112,11 @@
                         <!-- small box -->
                         <div class="small-box bg-yellow">
                             <div class="inner">
-                                <h3>8</h3>
+                                <h3 id="delta">8</h3>
                                 <p>参数Delta</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-money"></i>
+                                <i class="fa fa-th"></i>
                             </div>
                         </div>
                     </div>
@@ -124,12 +124,12 @@
                     <div class="col-lg-4 col-xs-12">
                         <!-- small box -->
                         <div class="info-box" style="height: 104px">
-                            <div class="info-box-icon bg-green" style="height: 104px;">
+                            <div id="safe-block" class="info-box-icon bg-green" style="height: 104px;padding-top: 10px">
                                 <i class="fa fa-shield"></i>
                             </div>
-                            <div class="info-box-content" style="margin-left: 100px;">
-                                <div class="info-box-number" style="color: black;margin-top: 10px;font-size:38px;">Safe</div>
-                                <div class="info-box-text" style="color: black;font-size: 15px;">警戒状态</div>
+                            <div id="safe-div" class="info-box-content text-green" style="margin-left: 100px;">
+                                <div id="safe-condition" class="info-box-number" style="margin-top: 10px;font-size:38px;">Safe</div>
+                                <div class="info-box-text" style="font-size: 15px;">警戒状态</div>
                             </div>
                         </div>
                     </div>
@@ -146,6 +146,7 @@
                                 <th>成交价格</th>
                                 <th>行权价格</th>
                                 <th>对冲成本</th>
+                                <th>期权种类</th>
                                 <th>选择</th>
                             </tr>
                             <tr>
@@ -154,7 +155,9 @@
                                 <td>10</td>
                                 <td>20</td>
                                 <td>100</td>
-                                <td><input type="checkbox"><input ></td>
+                                <td>Eu</td>
+                                <input type="hidden" value="1111">
+                                <td><input type="checkbox"></td>
                             </tr>
                             <tr>
                                 <td>2016-08-02</td>
@@ -162,6 +165,8 @@
                                 <td>20</td>
                                 <td>40</td>
                                 <td>200</td>
+                                <td>Eu</td>
+                                <input type="hidden" value="2222">
                                 <td><input type="checkbox"></td>
                             </tr>
                             <tr>
@@ -170,6 +175,8 @@
                                 <td>30</td>
                                 <td>30</td>
                                 <td>300</td>
+                                <td>Ba</td>
+                                <input type="hidden" value="3333">
                                 <td><input type="checkbox"></td>
                             </tr>
                         </table>
