@@ -84,6 +84,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<mainClass>
+						nju.citicup.NjuCitiCupApplication
+					</mainClass>
 					<jvmArguments>
 						-Dfile.encoding=UTF-8
 					</jvmArguments>
