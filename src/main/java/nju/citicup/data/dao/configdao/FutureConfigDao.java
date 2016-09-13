@@ -29,6 +29,8 @@ public class FutureConfigDao {
         futureDao.setSigma(target, updatedSigmma);
     }
 
+    public void updateFutureQuantity(String target, int quantity){ futureDao.setQuantity(quantity, target);}
+
     public List<String> findAllTarget(){
         return futureDao.findAllTarget();
     }
