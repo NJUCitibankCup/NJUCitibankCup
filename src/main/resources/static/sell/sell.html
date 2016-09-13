@@ -165,22 +165,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>输出价格</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">￥</span>
-                                        <input type="text" class="form-control" value="0" disabled="disabled" id="final_price">
-                                        <span class="input-group-addon">.00</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer" align="center">
-                        <button type="submit" class="btn btn-primary" style="width: 30%;" id="calc_price">查看价格</button>
+                        <button type="submit" class="btn btn-primary" style="width: 30%;" id="calc_price" data-toggle="modal" data-target="#price-modal">查看价格</button>
                         <button type="submit" class="btn btn-primary bg-green" style="width: 30%;display: none;">
                             确认交易
                         </button>
@@ -204,6 +194,28 @@
     </footer>
 </div>
 <!-- ./wrapper -->
+
+<div class="modal" id="price-modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">输出价格</h4>
+      </div>
+      <div class="modal-body">
+        <p>输出价格为￥<b id="output_price"></b></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">重新选择</button>
+        <button type="button" class="btn btn-primary">确认交易</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <!-- jQuery 2.2.3 -->
 <script src="../vendor/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
