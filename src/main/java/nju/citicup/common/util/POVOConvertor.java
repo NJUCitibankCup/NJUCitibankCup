@@ -7,6 +7,7 @@ import nju.citicup.common.enumarate.OptionType;
 import nju.citicup.common.enumarate.SafeType;
 import nju.citicup.common.vo.CapitalVO;
 import nju.citicup.common.vo.OptionStateVO;
+import nju.citicup.data.future.FutureInfoClient;
 import nju.citicup.data.pyalgo.PyAlgoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,14 +21,14 @@ import java.util.List;
 public class POVOConvertor {
 
     @Autowired
-    PyAlgoClient pyAlgoClient;
+    FutureInfoClient futureInfoClient;
 
     @Autowired
     FutureNameMapper mapper;
 
 
     public CapitalVO convertOptionInfo2Capital(BasicOptionInfo basicOptionInfo, String stockCode){
-        double St = pyAlgoClient.caculateSigma(stockCode);
+        double St = futureInfoClient.getTemporaryInfo(stockCode);
         String option_id = basicOptionInfo.getId()+"";
         OptionType type = OptionType.Eu;
         if(basicOptionInfo instanceof BaOptionInfo)

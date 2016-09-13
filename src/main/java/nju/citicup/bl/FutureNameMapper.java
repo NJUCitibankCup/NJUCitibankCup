@@ -40,6 +40,11 @@ public class FutureNameMapper {
 
     }
 
+    public String cut(String former){
+        String type = former.substring(0, former.length()-4);
+        return type;
+    }
+
     private String convertType(String type){
         if(biMapper.containsKey(type)){
             return biMapper.get(type);

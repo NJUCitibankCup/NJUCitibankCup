@@ -3,10 +3,12 @@ package nju.citicup.WebController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nju.citicup.common.blservice.OptionStateBlService;
 import nju.citicup.common.enumarate.SafeType;
 import nju.citicup.common.vo.ListDataWrapper;
 import nju.citicup.common.vo.OptionStateListVO;
 import nju.citicup.common.vo.OptionStateVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,10 @@ import java.util.List;
 
 @Controller
 public class OptionStateController {
+
+    @Autowired
+    OptionStateBlService optionStateBlService;
+
     public static void main(String[] args) throws IOException {
         String json = "{\"futures_id\":\"112\",\"futures_name\":\"yumi\",\"number\":1,\"delta\":1,\"safe\":\"safe\"}";
 
@@ -51,19 +57,20 @@ public class OptionStateController {
     @RequestMapping("/api/optionState")
     @ResponseBody
     public ListDataWrapper getOptionState() {
-        ListDataWrapper wrapper = new ListDataWrapper();
-        wrapper.setMsg("");
-        wrapper.setCondition("success");
-
-        OptionStateListVO list1 = new OptionStateListVO("玉米", Arrays.asList(new OptionStateVO("011701", "玉米1701", 1, 1, SafeType.safe), new OptionStateVO("011702", "玉米1702", 1, 1, SafeType.warning)));
-        OptionStateListVO list2 = new OptionStateListVO("大豆", Arrays.asList(new OptionStateVO("021701", "大豆1701", 1, 1, SafeType.safe), new OptionStateVO("021702", "大豆1702", 1, 1, SafeType.warning)));
-
-        List<Object> data = Arrays.asList(list1, list2);
-
-        wrapper.setData(data);
-
-
-        return wrapper;
+//        ListDataWrapper wrapper = new ListDataWrapper();
+//        wrapper.setMsg("");
+//        wrapper.setCondition("success");
+//
+//        OptionStateListVO list1 = new OptionStateListVO("玉米", Arrays.asList(new OptionStateVO("011701", "玉米1701", 1, 1, SafeType.safe), new OptionStateVO("011702", "玉米1702", 1, 1, SafeType.warning)));
+//        OptionStateListVO list2 = new OptionStateListVO("大豆", Arrays.asList(new OptionStateVO("021701", "大豆1701", 1, 1, SafeType.safe), new OptionStateVO("021702", "大豆1702", 1, 1, SafeType.warning)));
+//
+//        List<Object> data = Arrays.asList(list1, list2);
+//
+//        wrapper.setData(data);
+//
+//
+//        return wrapper;
+        return optionStateBlService.getOptionStateList();
     }
 
 }

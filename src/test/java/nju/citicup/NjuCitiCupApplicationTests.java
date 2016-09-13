@@ -55,8 +55,8 @@ public class NjuCitiCupApplicationTests {
 
 	@Test
 	public void testInsertOption(){
-		optionConfigDao.insertOneOption(new BasicOptionInfo(7000, DateUtil.str2Date("2016-06-12")), "M1609");
-		optionConfigDao.insertOneOption(new BaOptionInfo(9000, DateUtil.str2Date("2016-05-12"), 5), "M1609");
+		optionConfigDao.insertOneOption(new BasicOptionInfo(7000, DateUtil.str2Date("2016-06-12")), "M1703");
+		optionConfigDao.insertOneOption(new BaOptionInfo(9000, DateUtil.str2Date("2016-05-12"), 5), "C1701");
 	}
 
 	@Test

@@ -3,6 +3,7 @@ package nju.citicup.data.dao.configdao;
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
 import nju.citicup.common.entity.BasicTradeInfo;
+import nju.citicup.common.enumarate.SafeType;
 import nju.citicup.common.jsonobj.OptionExtraInfo;
 import nju.citicup.data.dao.baiscdao.FutureDao;
 import nju.citicup.data.dao.baiscdao.OptionDao;
@@ -27,6 +28,16 @@ public class OptionConfigDao {
 
     @Autowired
     PyAlgoClient pyAlgoClient;
+
+
+    public SafeType judgeOptionSafety(String target, List<BasicOptionInfo> optionInfoList){
+        BasicTradeInfo basicTradeInfo = pyAlgoClient.hedgeCriteria(1, optionInfoList, target);
+        if(basicTradeInfo.getCount()<=0)
+            return SafeType.safe;
+        else
+            return SafeType.warning;
+    }
+
 
     /**
      * 用户在确定成交价格之后将期权录入数据库中
@@ -65,7 +76,7 @@ public class OptionConfigDao {
             basicOptionInfo.setDelta(optionExtraInfo.getDelta());
         }
 
-        System.out.println("Target: "+target+"  OptionList's Siza: "+basicOptionInfoList.size());
+        System.out.println("Target: "+target+"  OptionList's Size: "+basicOptionInfoList.size());
         return basicOptionInfoList;
     }
 

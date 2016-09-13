@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,6 +27,7 @@ public class FutureInfoClient {
 	 * @param code 代表期货的编号 如M0(连续期货), M1601(2016年1月份的期货)
 	 * @return 对应编号的期货的昨日收盘数据
 	 */
+	@Cacheable(value = "temporary")
 	public double getTemporaryInfo(String code){
 		RestTemplate restTemplate = new RestTemplate();
 		String uri = "http://hq.sinajs.cn/list={code}";
@@ -45,6 +47,7 @@ public class FutureInfoClient {
 		return yesterdayEndPrice;
 	}
 
+	@Cacheable(value = "historyDate")
 	public String getPrimaryDate(String code){
 
 		List<ArrayList<String>> tempList = getHistoryData(code);
@@ -63,6 +66,7 @@ public class FutureInfoClient {
 	 * @param code 代表期货的编号 如M0(连续期货), M1601(2016年1月份的期货)
 	 * @return 对应编号的期货的历史数据(鉴于新浪期货api，返回值有可能为空)
 	 */
+	@Cacheable(value = "historyInfo")
 	public List<Double> getHistoryInfo(String code){
 
 		List<ArrayList<String>> tempList = getHistoryData(code);

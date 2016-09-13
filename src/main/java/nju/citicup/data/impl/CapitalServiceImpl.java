@@ -2,6 +2,7 @@ package nju.citicup.data.impl;
 
 import nju.citicup.common.dataservice.CapitalDataService;
 import nju.citicup.common.entity.BasicOptionInfo;
+import nju.citicup.common.enumarate.SafeType;
 import nju.citicup.data.dao.configdao.FutureConfigDao;
 import nju.citicup.data.dao.configdao.OptionConfigDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class CapitalServiceImpl implements CapitalDataService {
     @Override
     public List<BasicOptionInfo> getOptionListByFutureId(String stockCode) {
         return optionConfigDao.getOptionInfoListByTarget(stockCode);
+    }
+
+    @Override
+    public SafeType judgeOptionSafety(String target, List<BasicOptionInfo> optionInfoList) {
+        return optionConfigDao.judgeOptionSafety(target, optionInfoList);
     }
 
 }

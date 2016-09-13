@@ -248,7 +248,9 @@ public class PyAlgoClient {
 
 
     private double getFutureSigmma(String target){
+        System.out.println("get sigmma be called");
         BasicFutureInfo basicFutureInfo = futureDao.findOne(target);
+        System.out.println(basicFutureInfo.getSigma());
         return basicFutureInfo.getSigma();
     }
 
