@@ -6,7 +6,7 @@ var selectOptionsUrl = "/api/selectOptions";
 var xData, yData;
 var chart;
 var gammaList = {};
-var gamma;
+var VAR, gamma;
 
 $('#close').click(function (e) {
     $('#detail-table').fadeOut(300);
@@ -23,18 +23,16 @@ $("#adjustBtn").click(function () {
             idList.push($(this).parent().prev('input').val());
         }
     });
-    xData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    yData = [10, 12, 13, 16, 9, 8, 7, 14, 2];
     var dom = document.getElementById("chart");
     chart = echarts.init(dom);
     chart.showLoading();
-    loadFunction(chart, xData, yData);
 
     $.ajax({
         url: window.host + selectOptionsUrl,
         data: {
             option_list: idList
         },
+        dataType: 'json',
         timeout: 5000,
         success: function (res) {
             var data = response(res);
@@ -55,14 +53,16 @@ $("#adjustBtn").click(function () {
                     prettify: false,
                     hasGrid: true,
                     onStart: function () {
-                        var currentGamma = data[1];
-                        $('#var').text(currentGamma);
-                        gamma = currentGamma;
+                        gamma = 1;
+                        var currentVar = data[gamma];
+                        $('#var').text(currentVar);
+                        VAR = currentVar;
                     },
                     onChange: function (res) {
-                        var currentGamma = data[res.from];
-                        $('#var').text(currentGamma);
-                        gamma = currentGamma;
+                        gamma = res.from;
+                        var currentVar = data[gamma];
+                        $('#var').text(currentVar);
+                        VAR = currentVar;
                     }
                 });
                 loadFunction(chart, xData, yData);
@@ -150,7 +150,7 @@ function preview() {
                 $('#current-number').text(data.current_number);
                 $('#origin-delta').text(data.origin_delta);
                 $('#current-delta').text(data.current_delta);
-                $('#current-var').text(data.var);
+                $('#current-var').text(VAR);
                 if (data.safe == "warning") {
                     $('#predict-safety').removeClass('label-success').addClass('label-warning').text("warning");
                 }
@@ -189,7 +189,7 @@ function confirmAdjust() {
 var futuresID = getParam(location.href, "futures_id");
 var getHistoryUrl = "/api/capital";
 
-//loadResource();
+loadResource();
 
 function loadResource() {
     $.ajax({
@@ -219,9 +219,10 @@ function loadResource() {
                     var single_delta = historyList[i].delta;
                     var sell_price = historyList[i].sell_price;
                     var future_price = historyList[i].futures_price;
-                    var single_cost = historylist[i].cost;
+                    var single_cost = historyList[i].cost;
                     var type = historyList[i].type;
-                    loadHistory(due_date, single_delta, sell_price, future_price, single_cost, type);
+                    var optionID = historyList[i].option_id;
+                    loadHistory(due_date, single_delta, sell_price, future_price, single_cost, type, optionID);
                 }
             }
         }
@@ -235,9 +236,8 @@ var history_template =
     '<td>sell_price</td> ' +
     '<td>future_price</td> ' +
     '<td>single_cost</td> ' +
-    '<td>sell_price</td> ' +
-    '<td>type</td>' +
-    '<input type="hidden" value="">' +
+    '<td>sell_type</td>' +
+    '<input type="hidden" value="option-id">' +
     '<td><input type="checkbox" name="option_id_picker"></td>' +
     '</tr>';
 
@@ -249,10 +249,11 @@ var history_template =
  * @param future_price
  * @param single_cost
  * @param type
+ * @param optionID
  */
-function loadHistory(due_date, single_delta, sell_price, future_price, single_cost, type) {
-    var tags = ['due_date', 'single_delta', 'sell_price', 'future_price', 'single_cost', 'type'];
-    var data = [due_date, single_delta, sell_price, future_price, single_cost, type];
+function loadHistory(due_date, single_delta, sell_price, future_price, single_cost, type, optionID) {
+    var tags = ['due_date', 'single_delta', 'sell_price', 'future_price', 'single_cost', 'sell_type', 'option-id'];
+    var data = [due_date, single_delta, sell_price, future_price, single_cost, type, optionID];
     var template = replaceTemplate(history_template, tags, data);
 
     $('#data-table').append(template);

@@ -93,7 +93,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1 class="default-font">
-                    资产组合
+                    <i onclick="back()" class="fa fa-arrow-circle-left feedback"></i> 资产组合
                 </h1>
             </section>
 
@@ -104,7 +104,7 @@
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
-                                <h3 id="cost">10</h3>
+                                <h3 id="cost"></h3>
 
                                 <p>成本Cost</p>
                             </div>
@@ -118,7 +118,7 @@
                         <!-- small box -->
                         <div class="small-box bg-yellow">
                             <div class="inner">
-                                <h3 id="delta">8</h3>
+                                <h3 id="delta"></h3>
 
                                 <p>参数Delta</p>
                             </div>
@@ -148,7 +148,7 @@
                 <div class="box box-primary">
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
+                        <table id="data-table" class="table table-hover">
                             <tr>
                                 <th>期权到期日期</th>
                                 <th>Delta</th>
@@ -158,36 +158,36 @@
                                 <th>期权种类</th>
                                 <th>选择</th>
                             </tr>
-                            <tr>
-                                <td>2016-08-01</td>
-                                <td>1.00</td>
-                                <td>10</td>
-                                <td>20</td>
-                                <td>100</td>
-                                <td>Eu</td>
-                                <input type="hidden" value="1111">
-                                <td><input name="option_id_picker" type="checkbox"></td>
-                            </tr>
-                            <tr>
-                                <td>2016-08-02</td>
-                                <td>2.00</td>
-                                <td>20</td>
-                                <td>40</td>
-                                <td>200</td>
-                                <td>Eu</td>
-                                <input type="hidden" value="2222">
-                                <td><input name="option_id_picker" type="checkbox"></td>
-                            </tr>
-                            <tr>
-                                <td>2016-08-03</td>
-                                <td>3.00</td>
-                                <td>30</td>
-                                <td>30</td>
-                                <td>300</td>
-                                <td>Ba</td>
-                                <input type="hidden" value="3333">
-                                <td><input name="option_id_picker" type="checkbox"></td>
-                            </tr>
+                            <!--<tr>-->
+                            <!--<td>2016-08-01</td>-->
+                            <!--<td>1.00</td>-->
+                            <!--<td>10</td>-->
+                            <!--<td>20</td>-->
+                            <!--<td>100</td>-->
+                            <!--<td>Eu</td>-->
+                            <!--<input type="hidden" value="1111">-->
+                            <!--<td><input name="option_id_picker" type="checkbox"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>2016-08-02</td>-->
+                            <!--<td>2.00</td>-->
+                            <!--<td>20</td>-->
+                            <!--<td>40</td>-->
+                            <!--<td>200</td>-->
+                            <!--<td>Eu</td>-->
+                            <!--<input type="hidden" value="2222">-->
+                            <!--<td><input name="option_id_picker" type="checkbox"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>2016-08-03</td>-->
+                            <!--<td>3.00</td>-->
+                            <!--<td>30</td>-->
+                            <!--<td>30</td>-->
+                            <!--<td>300</td>-->
+                            <!--<td>Ba</td>-->
+                            <!--<input type="hidden" value="3333">-->
+                            <!--<td><input name="option_id_picker" type="checkbox"></td>-->
+                            <!--</tr>-->
                         </table>
                     </div>
                     <!-- /.box-body -->

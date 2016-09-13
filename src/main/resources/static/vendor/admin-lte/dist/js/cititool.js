@@ -4,8 +4,9 @@
 
 /*-------------------------------URL操作-------------------------------------*/
 window.host = "http://120.27.117.222:8080";
-window.capitalUrl = host + "capital/capital.html";
-window.logUrl = host + "log/log.html";
+window.proxy = "http://localhost:63342/resources/static";
+window.capitalUrl = proxy + "/capital/capital.html";
+window.logUrl = proxy + "/log/log.html";
 
 function addParams(url, key, value) {
     if (url.charAt(url.length - 1) != "?" && url.charAt(url.length - 1) != "&") {
@@ -49,6 +50,10 @@ function getParam(sHref, sArgName) {
     return retval;
 }
 
+function back() {
+    history.go(-1);
+}
+
 /*-------------------------------DOM操作-------------------------------------*/
 /**
  * 替换html模版
@@ -57,10 +62,11 @@ function getParam(sHref, sArgName) {
  * @param data
  */
 function replaceTemplate(resource, params, data) {
+    var newSource = resource;
     for (var i = 0; i < params.length && i < data.length; i++) {
-        resource.replace(params[i], data[i]);
+        newSource = newSource.replace(params[i], data[i]);
     }
-    return resource;
+    return newSource;
 }
 
 /*-------------------------------Http操作-------------------------------------*/
