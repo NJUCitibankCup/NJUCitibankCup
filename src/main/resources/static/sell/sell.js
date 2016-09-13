@@ -16,20 +16,22 @@ $('#futures_type').change(function () {
 
 $('#option_type').change(function () {
   if ($(this).val() === "Ba") {
-    $('#block-level').show(300);
+    $('#block_level_group').show(300);
   } else {
-    $('#block-level').hide(300);
+    $('#block_level_group').hide(300);
   }
 })
 
 $('#calc_price').click(function () {
   var id = $('#futures_id').val();
   var type = $('#option_type').val();
-  var price = $('#option_price').val();
+  var price = $('#option_price').val() | 0;
+  var h = type === 'Ba' ? ($('#block_level').val() | 0) : -1;
   var data = {
     futures_id: id,
     type: type,
-    price: price
+    price: price,
+    h: h
   }
   console.log(data);
   getOptionsPrice(data);
