@@ -23,6 +23,16 @@ $('#option_type').change(function () {
 })
 
 $('#calc_price').click(function () {
+  var data = getData();
+  getOptionsPrice(data);
+})
+
+$('#sell_options').click(function () {
+  var data = getData();
+  sellOptions(data);
+})
+
+function getData() {
   var id = $('#futures_id').val();
   var type = $('#option_type').val();
   var price = $('#option_price').val() | 0;
@@ -34,8 +44,8 @@ $('#calc_price').click(function () {
     h: h
   }
   console.log(data);
-  getOptionsPrice(data);
-})
+  return data;
+}
 
 function getFuturesType() {
   var $type = $('#futures_type');
@@ -114,7 +124,7 @@ function getOptionsPrice(data) {
   //   data: data,
   //   dataType: 'json',
   //   success: function(res) {
-  //     $('#final_price').val(res.data.price);
+  //     $('#output_price').val(res.data.price);
   //   }
   // });
 
@@ -125,5 +135,31 @@ function getOptionsPrice(data) {
     	price: 100
     }
   }
-  $('#final_price').val(res.data.price);
+  $('#output_price').html(res.data.price);
+}
+
+function sellOptions(data) {
+  // var url = '/api/sellOptions';
+  // $.ajax({
+  //   type: 'POST',
+  //   url: url,
+  //   data: data,
+  //   dataType: 'json',
+  //   success: function(res) {
+  //     if (res.condition === 'success') {
+  //       $('#alert_success').show();
+  //     }
+  //   }
+  // });
+
+  var res = {
+    msg: "",
+    condition: "fail",
+    data: {}
+  }
+  if (res.condition === 'success') {
+    $('#alert_success').removeClass('hide');
+  } else {
+    $('#alert_fail').removeClass('hide');
+  }
 }

@@ -96,16 +96,16 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="alert alert-success alert-dismissible">
+                <div class="alert alert-success alert-dismissible hide" id="alert_success">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4 class="default-font"><i class="icon fa fa-check"></i> 交易成功！</h4>
-                    交易详细信息
+                    <!-- 交易详细信息 -->
                 </div>
 
-                <div class="alert alert-danger alert-dismissible">
+                <div class="alert alert-danger alert-dismissible hide" id="alert_fail">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4 class="default-font"><i class="icon fa fa-ban"></i> 交易失败！</h4>
-                    失败详细信息
+                    <!-- 失败详细信息 -->
                 </div>
 
                 <div class="box box-primary">
@@ -208,7 +208,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">重新选择</button>
-        <button type="button" class="btn btn-primary">确认交易</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="sell_options">确认交易</button>
       </div>
     </div>
     <!-- /.modal-content -->
