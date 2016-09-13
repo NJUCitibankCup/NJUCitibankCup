@@ -64,8 +64,8 @@ public class CapitalController {
         return wrapper;
     }
 
-    @RequestMapping("/api/adjustBin")
-    @ResponseBody
-    public ObjectDataWrapper getAdjustBin(@RequestParam("/api/"))
+//    @RequestMapping("/api/adjustBin")
+//    @ResponseBody
+//    public ObjectDataWrapper getAdjustBin(@RequestParam("/api/"))
 
 }
