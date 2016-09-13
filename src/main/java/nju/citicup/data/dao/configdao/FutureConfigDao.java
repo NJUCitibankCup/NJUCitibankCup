@@ -2,6 +2,7 @@ package nju.citicup.data.dao.configdao;
 
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.data.dao.baiscdao.FutureDao;
+import nju.citicup.data.future.FutureInfoClient;
 import nju.citicup.data.pyalgo.PyAlgoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,8 @@ public class FutureConfigDao {
     @Autowired
     PyAlgoClient pyAlgoClient;
 
+    @Autowired
+    FutureInfoClient futureInfoClient;
 
     public void dailyUpdateSigmma(String target){
         double updatedSigmma = pyAlgoClient.caculateSigma(target);

@@ -16,7 +16,7 @@ public class OptionStateVO {
 
     }
 
-    public OptionStateVO(String futures_id, String futures_name, int number, int delta, SafeType safe) {
+    public OptionStateVO(String futures_id, String futures_name, int number, double delta, SafeType safe) {
         this.futures_id = futures_id;
         this.futures_name = futures_name;
         this.number = number;
@@ -52,7 +52,7 @@ public class OptionStateVO {
         return delta;
     }
 
-    public void setDelta(int delta) {
+    public void setDelta(double delta) {
         this.delta = delta;
     }
 
