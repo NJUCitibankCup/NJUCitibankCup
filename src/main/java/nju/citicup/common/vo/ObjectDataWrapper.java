@@ -4,9 +4,9 @@ package nju.citicup.common.vo;
  * Created by nians on 2016/9/13.
  */
 public class ObjectDataWrapper {
-    private String msg;
-    private String condition;
-    private Object data;
+    private String msg="";
+    private String condition="success";
+    private Object data="";
 
     public ObjectDataWrapper() {
     }

@@ -29,10 +29,11 @@ function preLoad() {
                             break;
                         } else {
                             var futuresID = detailDataList[j].futures_id;
+                            var futuresName = detailDataList[j].futures_name;
                             var number = detailDataList[j].number;
                             var delta = detailDataList[j].delta;
                             var safe = detailDataList[j].safe;
-                            detail += loadFuturesContent(futuresID, number, delta, safe);
+                            detail += loadFuturesContent(futuresID, futuresName, number, delta, safe);
                         }
                     }
                     loadFutures(type, detail, moreTag);
@@ -43,7 +44,7 @@ function preLoad() {
 }
 
 var futures_template =
-    '<div class="col-md-6" style="min-height: 300px"> ' +
+    '<div class="col-md-6"> ' +
     '<div class="box box-primary"> ' +
     '<div class="box-header"> ' +
     '<h3 class="box-title default-font">futures-name</h3> ' +
@@ -63,12 +64,14 @@ var futures_template =
 
 var futures_content_template =
     '<tr>' +
-    '<td>futures-id</td>' +
+    '<td>futures-name</td>' +
     '<td>futures-num</td>' +
-    '<td><span class="label label-futures-safe">futures-safe-num</span>futures-delta</td>' +
+    '<td><span class="label label-futures-safe">futures-delta</span></td>' +
     '<td>' +
-    '<button onclick="gotoCapital(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;">资产组合</button>' +
-    '<button onclick="gotoDetail(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;">交易详情</button>' +
+    '<button onclick="gotoCapital(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;">' +
+    '<i class="fa fa-th"></i>  资产组合</button>' +
+    '<button onclick="gotoDetail(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;margin-left: 10px">' +
+    '<i class="fa fa-cny"></i>  交易详情</button>' +
     '</td>' +
     '</tr>';
 
@@ -88,14 +91,20 @@ function loadFutures(type, detail, moreTag) {
 /**
  * 加载期权详情
  * @param futuresID
+ * @param futuresName
  * @param number
  * @param delta
  * @param safe
  */
-function loadFuturesContent(futuresID, number, delta, safe) {
-    var template = futures_content_template.replace(/futures-id/g, futuresID);
-    template = template.replace('futures-safe', safe);
-    template = template.replace('futures-safe-num', number);
+function loadFuturesContent(futuresID, futuresName, number, delta, safe) {
+    var template = futures_content_template.replace("futures-name", futuresName);
+    template = template.replace(/futures-id/g, futuresID);
+    if (safe == "safe") {
+        template = template.replace('futures-safe', "success");
+    } else {
+        template = template.replace('futures-safe', "warning");
+    }
+    template = template.replace('futures-num', number);
     template = template.replace('futures-delta', delta);
     return template;
 }
@@ -172,7 +181,9 @@ var data_template =
     '<td width="150"><span class="label label-success">type-delta</span></td>' +
     '<td>' +
     '<button onclick="gotoCapital(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;">资产组合</button>' +
-    '<button onclick="gotoDetail(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;">交易详情</button>' +
+    '<button onclick="gotoDetail(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;margin-left: 10px">' +
+    '交易详情' +
+    '</button>' +
     '</td>' +
     '</tr>';
 

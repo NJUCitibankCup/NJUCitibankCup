@@ -29,6 +29,8 @@ public interface FutureDao extends CrudRepository<BasicFutureInfo, String> {
     @Query("update BasicFutureInfo b set b.quantity= :quantity where b.target= :target")
     int setQuantity(@Param("quantity") int quantity, @Param("target") String target);
 
-    @Query("select future.target from BasicFutureInfo future")
+    @Query("select f.target from BasicFutureInfo f")
     List<String> findAllTarget();
+
+    List<BasicFutureInfo> findByTargetStartsWith(String type);
 }

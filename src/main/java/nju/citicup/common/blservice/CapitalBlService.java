@@ -7,4 +7,8 @@ import nju.citicup.common.vo.ObjectDataWrapper;
  */
 public interface CapitalBlService {
     ObjectDataWrapper getCapital(String stockCode);
+
+    ObjectDataWrapper getVarGammaGraph(String[] option_list);
+
+    ObjectDataWrapper getPredictResult(int lower_gamma, String [] option_list, String target);
 }

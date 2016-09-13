@@ -58,7 +58,8 @@ public class OptionStateBlServiceImpl implements OptionStateBlService{
                 optionStateVOList.add(optionStateVO);
                 optionStateVOMap.put(futureType, optionStateVOList);
             }else{
-                List<OptionStateVO> optionStateVOList = Arrays.asList(optionStateVO);
+                List<OptionStateVO> optionStateVOList = new ArrayList<>();
+                optionStateVOList.add(optionStateVO);
                 optionStateVOMap.put(futureType, optionStateVOList);
             }
 
