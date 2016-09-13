@@ -24,3 +24,42 @@
     z-index: 2;
     cursor: pointer;
 }
+
+@media (max-width: 767px) {
+    .pop-window-small {
+        display: none;
+        position: absolute;
+        left: 3%;
+        right: 3%;
+        top: 10%;
+        bottom: 10%;
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+@media (min-width: 768px) {
+    .pop-window-small {
+        display: none;
+        position: absolute;
+        left: 20%;
+        right: 20%;
+        top: 10%;
+        bottom: 10%;
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+.feedback {
+    cursor: pointer;
+}
+
+.prev-btn {
+    height: 100%;
+    padding-top: 15px;
+}
+
+.prev-row {
+    padding-top: 20px;
+    height: 15%;
+    font-size: 16px;
+}
