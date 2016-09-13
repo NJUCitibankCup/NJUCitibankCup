@@ -117,7 +117,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>期权种类</label>
+                                    <label>期货类型</label>
                                     <select class="form-control" id="futures_type">
                                         <option>大豆</option>
                                         <option>大豆</option>
@@ -142,9 +142,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>期权种类</label>
-                                    <select class="form-control" onchange="changeOptionType(this)">
-                                        <option>障碍期权</option>
-                                        <option>欧式期权</option>
+                                    <select class="form-control" id="option_type">
+                                        <option value="Ba">障碍期权</option>
+                                        <option value="Eu">欧式期权</option>
                                     </select>
                                 </div>
                             </div>
@@ -160,7 +160,7 @@
 
                                     <div class="input-group">
                                         <span class="input-group-addon">￥</span>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" id="option_price">
                                         <span class="input-group-addon">.00</span>
                                     </div>
                                 </div>
@@ -170,7 +170,7 @@
                                     <label>输出价格</label>
                                     <div class="input-group">
                                         <span class="input-group-addon">￥</span>
-                                        <input type="text" class="form-control" value="0" disabled="disabled">
+                                        <input type="text" class="form-control" value="0" disabled="disabled" id="final_price">
                                         <span class="input-group-addon">.00</span>
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer" align="center">
-                        <button type="submit" class="btn btn-primary" style="width: 30%;">查看价格</button>
+                        <button type="submit" class="btn btn-primary" style="width: 30%;" id="calc_price">查看价格</button>
                         <button type="submit" class="btn btn-primary bg-green" style="width: 30%;display: none;">
                             确认交易
                         </button>

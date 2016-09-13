@@ -5,12 +5,34 @@
 $(function() {
   getFuturesType();
   var currentType = $('#futures_type').val();
+  console.log(currentType);
   getFuturesId(currentType);
 })
 
-$('#futures_type').change(function() {
+$('#futures_type').change(function () {
   var type = $(this).val();
   getFuturesId(type);
+})
+
+$('#option_type').change(function () {
+  if ($(this).val() === "Ba") {
+    $('#block-level').show(300);
+  } else {
+    $('#block-level').hide(300);
+  }
+})
+
+$('#calc_price').click(function () {
+  var id = $('#futures_id').val();
+  var type = $('#option_type').val();
+  var price = $('#option_price').val();
+  var data = {
+    futures_id: id,
+    type: type,
+    price: price
+  }
+  console.log(data);
+  getOptionsPrice(data);
 })
 
 function getFuturesType() {
@@ -37,8 +59,8 @@ function getFuturesType() {
     ]
   }
   $type.html('');
-  res.data.map(function(type) {
-    $type.append('<option>' + type + '</option>');
+  res.data.map(function(type, index) {
+    $type.append('<option value="' + type + '">' + type + '</option>');
   });
 }
 
@@ -78,14 +100,28 @@ function getFuturesId(type) {
 
   $id.html('');
   res.data.map(function(id) {
-    $id.append('<option>' + id.futures_name + '</option>');
+    $id.append('<option value="' + id.futures_id + '">' + id.futures_name + '</option>');
   });
 }
 
-function changeOptionType(select) {
- if ($(select).val() === "障碍期权") {
-   $('#block-level').show(300);
- } else {
-   $('#block-level').hide(300);
- }
+function getOptionsPrice(data) {
+  // var url = '/api/getOptionsPrice';
+  // $.ajax({
+  //   type: 'POST',
+  //   url: url,
+  //   data: data,
+  //   dataType: 'json',
+  //   success: function(res) {
+  //     $('#final_price').val(res.data.price);
+  //   }
+  // });
+
+  var res = {
+    msg: "",
+    condition: "success",
+    data: {
+    	price: 100
+    }
+  }
+  $('#final_price').val(res.data.price);
 }
