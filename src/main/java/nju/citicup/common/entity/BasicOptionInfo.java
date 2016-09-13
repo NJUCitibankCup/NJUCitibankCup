@@ -31,6 +31,9 @@ public class BasicOptionInfo {
     /*期权价格*/
     double price;
 
+    /*对冲成本*/
+    double cost;
+
     @ManyToOne
     @JoinColumn(name = "target")
     BasicFutureInfo basicFutureInfo;
@@ -104,6 +107,14 @@ public class BasicOptionInfo {
 
     public void setGamma(double gamma) {
         this.gamma = gamma;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
     public BasicFutureInfo getBasicFutureInfo() {

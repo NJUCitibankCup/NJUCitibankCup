@@ -2,6 +2,7 @@ package nju.citicup.data.dao.configdao;
 
 import nju.citicup.common.entity.BasicFutureInfo;
 import nju.citicup.common.entity.BasicOptionInfo;
+import nju.citicup.common.entity.BasicTradeInfo;
 import nju.citicup.common.jsonobj.OptionExtraInfo;
 import nju.citicup.data.dao.baiscdao.FutureDao;
 import nju.citicup.data.dao.baiscdao.OptionDao;
@@ -102,6 +103,21 @@ public class OptionConfigDao {
             basicOptionInfo.setGamma(optionExtraInfo.getGamma());
         }
         return basicOptionInfoList;
+    }
+
+    /**
+     * 某次调仓结束后 需要对选定的期权列表进行更新  更新每支期权的对冲价格
+     * @param basicTradeInfo
+     * @param optionInfoList
+     */
+    public void updateOptionCost(BasicTradeInfo basicTradeInfo, List<BasicOptionInfo> optionInfoList){
+        int size = optionInfoList.size();
+        double totalCost = basicTradeInfo.getCost();
+        double avg_cost = totalCost / (double) size ;
+
+        for(BasicOptionInfo optionInfo: optionInfoList){
+            optionDao.updateCost(avg_cost, optionInfo.getId());
+        }
     }
 
 }
