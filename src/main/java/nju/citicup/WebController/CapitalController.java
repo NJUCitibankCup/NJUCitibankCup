@@ -12,21 +12,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 
 /**
  * Created by nians on 2016/9/13.
  */
-@Controller
+@RestController
 public class CapitalController {
 
     @Autowired
     CapitalBlService capitalBlService;
 
     @RequestMapping("/api/capital")
-    @ResponseBody
-
     public ObjectDataWrapper getCapital(@RequestParam("futures_id") String stockCode) {
         return capitalBlService.getCapital(stockCode);
     }
@@ -35,7 +34,6 @@ public class CapitalController {
 
 
     @RequestMapping("/api/selectOptions")
-    @ResponseBody
     public ObjectDataWrapper selectOptions(@RequestParam("option_list") String[] option_list) {
         ObjectDataWrapper wrapper = new ObjectDataWrapper();
         wrapper.setMsg("");
@@ -51,7 +49,6 @@ public class CapitalController {
     }
 
     @RequestMapping("/api/predictResult")
-    @ResponseBody
     public ObjectDataWrapper getPredictResult(@RequestParam("lower_gamma") int lower_gamma) {
         ObjectDataWrapper wrapper = new ObjectDataWrapper();
         wrapper.setMsg("");
@@ -64,8 +61,10 @@ public class CapitalController {
         return wrapper;
     }
 
-//    @RequestMapping("/api/adjustBin")
-//    @ResponseBody
-//    public ObjectDataWrapper getAdjustBin(@RequestParam("/api/"))
+    @RequestMapping("/api/adjustBin")
+    public ObjectDataWrapper getAdjustBin(String futures_id,int lower_gamma){
+        ObjectDataWrapper wapper = new ObjectDataWrapper();
+        return wapper;
+    }
 
 }

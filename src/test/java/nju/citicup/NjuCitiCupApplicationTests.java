@@ -28,7 +28,6 @@ import java.util.Set;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = NjuCitiCupApplication.class)
-@Rollback(false)
 public class NjuCitiCupApplicationTests {
 
 

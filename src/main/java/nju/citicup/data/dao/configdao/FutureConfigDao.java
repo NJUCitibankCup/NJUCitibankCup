@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by lenovo on 2016/9/11.
@@ -41,5 +42,12 @@ public class FutureConfigDao {
 
     public BasicFutureInfo getFutureByTarget(String target){
         return futureDao.findOne(target);
+    }
+
+    public List<String> findTargetByType(String type){
+        return futureDao.findByTargetStartsWith(type)
+                .stream()
+                .map(BasicFutureInfo::getTarget)
+                .collect(Collectors.toList());
     }
 }

@@ -19,9 +19,9 @@ public class FutureNameMapper {
 
     String name;
 
-    Map<String,String> mapper;
+    private Map<String,String> mapper;
 
-    BiMap<String,String> biMapper;
+    private BiMap<String,String> biMapper;
 
     @PostConstruct
     protected void init(){
