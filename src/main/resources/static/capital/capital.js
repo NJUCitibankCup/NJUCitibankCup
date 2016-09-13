@@ -1,113 +1,191 @@
 /**
  * Created by Alan on 2016/9/7.
  */
-/*----------------------------------------调仓详情弹窗---------------------------------------------*/
-$("#adjustBtn").click(function () {
-    $("input[type='checkbox']").each(function(){
+/*----------------------------------------调仓图表弹窗---------------------------------------------*/
+var selectOptionsUrl = "/api/selectOptions";
+var xData, yData;
+var chart;
+var gammaList = {};
+var gamma;
 
-    })
-
-    /*detail-table加载完毕之后使用callback开始绘图*/
-    // $('#detail-table').fadeIn(300, function () {
-        /* ChartJS
-         * -------
-         * Here we will create a few charts using ChartJS
-         */
-
-        //--------------
-        //- AREA CHART -
-        //--------------
-
-        // Get context with jQuery - using jQuery's .get() method.
-        // var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-        // // This will get the first returned node in the jQuery collection.
-        // var areaChart = new Chart(areaChartCanvas);
-        //
-        // var areaChartData = {
-        //     labels: ["January", "February", "March", "April", "May", "June", "July"],
-        //     datasets: [
-        //         {
-        //             label: "Electronics",
-        //             fillColor: "rgba(210, 214, 222, 1)",
-        //             strokeColor: "rgba(210, 214, 222, 1)",
-        //             pointColor: "rgba(210, 214, 222, 1)",
-        //             pointStrokeColor: "#c1c7d1",
-        //             pointHighlightFill: "#fff",
-        //             pointHighlightStroke: "rgba(220,220,220,1)",
-        //             data: [65, 59, 80, 81, 56, 55, 40]
-        //         },
-        //         {
-        //             label: "Digital Goods",
-        //             fillColor: "rgba(60,141,188,0.9)",
-        //             strokeColor: "rgba(60,141,188,0.8)",
-        //             pointColor: "#3b8bba",
-        //             pointStrokeColor: "rgba(60,141,188,1)",
-        //             pointHighlightFill: "#fff",
-        //             pointHighlightStroke: "rgba(60,141,188,1)",
-        //             data: [28, 48, 40, 19, 86, 27, 90]
-        //         }
-        //     ]
-        // };
-        //
-        // var areaChartOptions = {
-        //     //Boolean - If we should show the scale at all
-        //     showScale: true,
-        //     //Boolean - Whether grid lines are shown across the chart
-        //     scaleShowGridLines: false,
-        //     //String - Colour of the grid lines
-        //     scaleGridLineColor: "rgba(0,0,0,.05)",
-        //     //Number - Width of the grid lines
-        //     scaleGridLineWidth: 1,
-        //     //Boolean - Whether to show horizontal lines (except X axis)
-        //     scaleShowHorizontalLines: true,
-        //     //Boolean - Whether to show vertical lines (except Y axis)
-        //     scaleShowVerticalLines: true,
-        //     //Boolean - Whether the line is curved between points
-        //     bezierCurve: true,
-        //     //Number - Tension of the bezier curve between points
-        //     bezierCurveTension: 0.3,
-        //     //Boolean - Whether to show a dot for each point
-        //     pointDot: false,
-        //     //Number - Radius of each point dot in pixels
-        //     pointDotRadius: 4,
-        //     //Number - Pixel width of point dot stroke
-        //     pointDotStrokeWidth: 1,
-        //     //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        //     pointHitDetectionRadius: 20,
-        //     //Boolean - Whether to show a stroke for datasets
-        //     datasetStroke: true,
-        //     //Number - Pixel width of dataset stroke
-        //     datasetStrokeWidth: 2,
-        //     //Boolean - Whether to fill the dataset with a color
-        //     datasetFill: true,
-        //     //String - A legend template
-        //     legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-        //     //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-        //     maintainAspectRatio: true,
-        //     //Boolean - whether to make the chart responsive to window resizing
-        //     responsive: true
-        // };
-
-        //Create the line chart
-        // areaChart.Line(areaChartData, areaChartOptions);
-    // })
-    // $('#main-content').css('opacity', '0.3');
-
-});
-
-/*----------------------------------------数据详情弹窗---------------------------------------------*/
 $('#close').click(function (e) {
     $('#detail-table').fadeOut(300);
     $('#main-content').css('opacity', '1');
 });
 
-/*----------------------------确认调仓结果响应事件--------------------------------------------------*/
-$('#confirmAdjustBtn').click(function (e) {
-        $('#detail-table').fadeOut(300);
-        $('#main-content').css('opacity', '1');
-    }
-);
+$("#adjustBtn").click(function () {
+    $('#chart-div').show();
+    $('#table-div').hide();
+    $('#detail-table').fadeIn(300);
+    var idList = [];
+    $("input[name='option_id_picker']").each(function () {
+        if ($(this).is(':checked')) {
+            idList.push($(this).parent().prev('input').val());
+        }
+    });
+    xData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    yData = [10, 12, 13, 16, 9, 8, 7, 14, 2];
+    var dom = document.getElementById("chart");
+    chart = echarts.init(dom);
+    chart.showLoading();
+    loadFunction(chart, xData, yData);
 
+    $.ajax({
+        url: window.host + selectOptionsUrl,
+        data: {
+            option_list: idList
+        },
+        timeout: 5000,
+        success: function (res) {
+            var data = response(res);
+            if (data != null) {
+                xData = data.x_data;
+                yData = data.y_data;
+                for (var i = 0; i < xData.length && i < yData.length; i++) {
+                    gammaList[xData[i]] = yData[i];
+                }
+                /* ION SLIDER */
+                $("#range_1").ionRangeSlider({
+                    min: 1,
+                    max: 1501,
+                    from: 1,
+                    type: 'single',
+                    step: 50,
+                    prefix: "Gamma ",
+                    prettify: false,
+                    hasGrid: true,
+                    onStart: function () {
+                        var currentGamma = data[1];
+                        $('#var').text(currentGamma);
+                        gamma = currentGamma;
+                    },
+                    onChange: function (res) {
+                        var currentGamma = data[res.from];
+                        $('#var').text(currentGamma);
+                        gamma = currentGamma;
+                    }
+                });
+                loadFunction(chart, xData, yData);
+            }
+        }
+    });
+});
+
+/**
+ * 加载函数
+ * @param chart
+ * @param xData
+ * @param yData
+ */
+function loadFunction(chart, xData, yData) {
+    var option = {
+        title: {
+            text: 'VAR Selector'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['Gamma']
+        },
+        grid: {
+            left: '5%',
+            right: '5%',
+            bottom: '3%',
+            nameGap: 30,
+            containLabel: true
+        },
+        xAxis: [
+            {
+                name: 'Gamma',
+                nameLocation: 'middle',
+                type: 'category',
+                boundaryGap: false,
+                data: xData
+            }
+        ],
+        yAxis: [
+            {
+                name: 'Var',
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'VAR',
+                type: 'line',
+                stack: '总量',
+                areaStyle: {normal: {}},
+                data: yData
+            }
+        ]
+    };
+    chart.setOption(option, true);
+    chart.hideLoading();
+}
+
+function resizeChart() {
+    chart.resize();
+}
+
+var predictResUrl = "/api/predictResult";
+
+/**
+ * 进入预览界面
+ */
+function preview() {
+    $.ajax({
+        url: window.host + predictResUrl,
+        data: {
+            lower_gamma: gamma
+        },
+        timeout: 5000,
+        success: function (res) {
+            var data = response(res);
+            if (data != null) {
+                $('#name').text(data.futures_name);
+                $('#number').text(data.number);
+                $('#origin-cost').text(data.origin_cost);
+                $('#origin-number').text(data.origin_number);
+                $('#current-number').text(data.current_number);
+                $('#origin-delta').text(data.origin_delta);
+                $('#current-delta').text(data.current_delta);
+                $('#current-var').text(data.var);
+                if (data.safe == "warning") {
+                    $('#predict-safety').removeClass('label-success').addClass('label-warning').text("warning");
+                }
+                $('#chart-div').hide(300);
+                $('#table-div').show(300);
+            }
+        }
+    });
+}
+
+/*----------------------------------------数据详情弹窗---------------------------------------------*/
+
+function reAdjust() {
+    $('#chart-div').show(300);
+    $('#table-div').hide(300);
+}
+
+function confirmAdjust() {
+    $.ajax({
+        url: window.host + predictResUrl,
+        data: {
+            futures_id: futuresID,
+            lower_gamma: gamma
+        },
+        timeout: 5000,
+        success: function (res) {
+            var data = response(res);
+            if (data != null) {
+                //TODO 成功反馈
+            }
+        }
+    })
+}
+
+/*-----------------------------------------数据加载---------------------------------------------------*/
 var futuresID = getParam(location.href, "futures_id");
 var getHistoryUrl = "/api/capital";
 
@@ -159,6 +237,7 @@ var history_template =
     '<td>single_cost</td> ' +
     '<td>sell_price</td> ' +
     '<td>type</td>' +
+    '<input type="hidden" value="">' +
     '<td><input type="checkbox" name="option_id_picker"></td>' +
     '</tr>';
 
@@ -178,4 +257,3 @@ function loadHistory(due_date, single_delta, sell_price, future_price, single_co
 
     $('#data-table').append(template);
 }
-

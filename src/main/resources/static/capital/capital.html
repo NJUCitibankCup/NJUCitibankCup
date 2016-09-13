@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!--ionSlider-->
+    <link rel="stylesheet" href="../vendor/admin-lte/plugins/ionslider/ion.rangeSlider.css">
+    <link rel="stylesheet" href="../vendor/admin-lte/plugins/ionslider/ion.rangeSlider.skinNice.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../vendor/admin-lte/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -27,15 +30,16 @@
     <![endif]-->
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-<body class="hold-transition skin-blue layout-top-nav">
-<div class="wrapper">
+<body class="hold-transition skin-blue layout-top-nav" onresize="resizeChart()">
+<div class="wrapper default-font">
 
     <header class="main-header">
         <nav class="navbar navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
                     <a href="../index.html" class="navbar-brand"><b>Citi</b>Bank</a>
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse">
                         <i class="fa fa-bars"></i>
                     </button>
                 </div>
@@ -43,7 +47,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="../index.html">查看期权状态 <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="../index.html">查看期权状态 <span class="sr-only">(current)</span></a>
+                        </li>
                         <li><a href="../sell/sell.html">卖期权</a></li>
                         <li><a href="../about/about.html">关于</a></li>
                     </ul>
@@ -87,7 +92,7 @@
         <div class="container">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
+                <h1 class="default-font">
                     资产组合
                 </h1>
             </section>
@@ -100,6 +105,7 @@
                         <div class="small-box bg-aqua">
                             <div class="inner">
                                 <h3 id="cost">10</h3>
+
                                 <p>成本Cost</p>
                             </div>
                             <div class="icon">
@@ -113,6 +119,7 @@
                         <div class="small-box bg-yellow">
                             <div class="inner">
                                 <h3 id="delta">8</h3>
+
                                 <p>参数Delta</p>
                             </div>
                             <div class="icon">
@@ -128,7 +135,9 @@
                                 <i class="fa fa-shield"></i>
                             </div>
                             <div id="safe-div" class="info-box-content text-green" style="margin-left: 100px;">
-                                <div id="safe-condition" class="info-box-number" style="margin-top: 10px;font-size:38px;">Safe</div>
+                                <div id="safe-condition" class="info-box-number"
+                                     style="margin-top: 10px;font-size:38px;">Safe
+                                </div>
                                 <div class="info-box-text" style="font-size: 15px;">警戒状态</div>
                             </div>
                         </div>
@@ -157,7 +166,7 @@
                                 <td>100</td>
                                 <td>Eu</td>
                                 <input type="hidden" value="1111">
-                                <td><input type="checkbox"></td>
+                                <td><input name="option_id_picker" type="checkbox"></td>
                             </tr>
                             <tr>
                                 <td>2016-08-02</td>
@@ -167,7 +176,7 @@
                                 <td>200</td>
                                 <td>Eu</td>
                                 <input type="hidden" value="2222">
-                                <td><input type="checkbox"></td>
+                                <td><input name="option_id_picker" type="checkbox"></td>
                             </tr>
                             <tr>
                                 <td>2016-08-03</td>
@@ -177,69 +186,84 @@
                                 <td>300</td>
                                 <td>Ba</td>
                                 <input type="hidden" value="3333">
-                                <td><input type="checkbox"></td>
+                                <td><input name="option_id_picker" type="checkbox"></td>
                             </tr>
                         </table>
                     </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-                <div align="right"><button class="btn btn-lg bg-blue" id="adjustBtn">一键调仓</button></div>
+                <div align="right">
+                    <button class="btn btn-default bg-blue" id="adjustBtn">一键调仓</button>
+                </div>
                 <!-- Main content -->
             </section>
             <!-- /.content -->
             <!--Sub content-->
-            <section id="detail-table" class="content pop-window floating">
+            <section id="detail-table" class="content pop-window-small floating" style="padding-bottom: 0">
                 <div id="close" class="close-icon">×</div>
-                <div class="box-header">
-                    <h2 id="type-name" class="default-font">调仓结果</h2>
-                </div>
-                <!-- /.box-header -->
-                <!--content-row-->
-                <div class="row">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-5 col-xs-12">
-                      <table class="table no-padding" style="margin: 0;">
-                    <tr>
-                    <th width="20%">期货种类</th>
-                    <th width="20%">玉米</th>
-                    <th width="20%">仓量</th>
-                    <th width="20%">250</th>
-                    </tr>
-                    <tr>
-                        <td width="20%">原有成本</td>
-                        <td width="20%">50</td>
-                        <td width="20%">原有数量</td>
-                        <td width="20%">500</td>
-                    </tr>
-                    <tr>
-                        <th width="20%">调整后Delta</th>
-                        <th width="20%">33</th>
-                        <th width="20%">调整前Delta</th>
-                        <th width="20%">66</th>
-                    </tr>
-                    <tr>
-                        <th width="20%">现数量</th>
-                        <th width="20%">5000</th>
-                        <th width="20%">VaR</th>
-                        <th width="20%">233</th>
-                    </tr>
-                    <tr>
-                        <th width="20%">警告状态</th>
-                        <th width="20%"><small class="label label-success">Safe</small></th>
-                        <th width="20%"></th>
-                        <th width="20%"></th>
-                    </tr>
-                </table>
+                <div id="table-div" align="center" style="height: 100%;display: none;">
+                    <div class="box-header" style="height: 20%;">
+                        <h3 class="default-font">调仓结果</h3>
+                        <h6 class="default-font">Adjust Results</h6>
                     </div>
-                    <div class="col-lg-5 col-xs-12">
-                        <div class="chart">
-                            <canvas id="areaChart" style="height:250px"></canvas>
+                    <!--content-row-->
+                    <table class="table no-padding text-center" style="margin: 0;height: 65%;">
+                        <tr>
+                            <th width="20%">期货种类</th>
+                            <td width="20%" id="name">玉米</td>
+                            <th width="20%">仓量</th>
+                            <td width="20%" id="number">250</td>
+                        </tr>
+                        <tr>
+                            <th width="20%">原有成本</th>
+                            <td width="20%" id="origin-cost">50</td>
+                            <th width="20%">原有数量</th>
+                            <td width="20%" id="origin-number">500</td>
+                        </tr>
+                        <tr>
+                            <th width="20%">调整后Delta</th>
+                            <td width="20%" id="origin-delta">33</td>
+                            <th width="20%">调整前Delta</th>
+                            <td width="20%" id="current-delta">66</td>
+                        </tr>
+                        <tr>
+                            <th width="20%">现数量</th>
+                            <td width="20%" id="current-number">5000</td>
+                            <th width="20%">VaR</th>
+                            <td width="20%" id="current-var">233</td>
+                        </tr>
+                        <tr>
+                            <th width="20%">警告状态</th>
+                            <td width="20%">
+                                <small id="predict-safety" class="label label-success">Safe</small>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="row prev-row">
+                        <div onclick="reAdjust()" class="col-md-6 bg-green prev-btn feedback">
+                            重新调整
+                        </div>
+                        <div onclick="confirmAdjust()" class="col-md-6 bg-primary prev-btn feedback">
+                            确认调仓
                         </div>
                     </div>
-                    <div class="col-lg-1"></div>
                 </div>
-                <div align="center" style="margin-top: 20px;"><button class="btn btn-lg bg-blue" id="confirmAdjustBtn">确认</button></div>
+
+                <div id="chart-div" style="height: 100%;" align="center">
+                    <div id="chart" style="padding-top:2%;height:75%;width: 100%;"></div>
+                    <div style="height: 10%;padding: 0 4% 0 7%">
+                        <input id="range_1" type="hidden" name="range_1" value="" class="irs-hidden-input" readonly="">
+                    </div>
+                    <div class="row prev-row">
+                        <div class="col-md-8 bg-primary prev-btn">
+                            <b>当前VAR值:</b> <span id="var">1</span>
+                        </div>
+                        <div onclick="preview()" class="col-md-4 bg-gray-light prev-btn feedback">
+                            确认Gamma
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
         <!-- /.container -->
@@ -247,7 +271,8 @@
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="container">
-            <strong>Copyright &copy; 2016 <a href="https://github.com/NJUCitibankCup/">NJUCitibankCup</a>.</strong> All rights
+            <strong>Copyright &copy; 2016 <a href="https://github.com/NJUCitibankCup/">NJUCitibankCup</a>.</strong> All
+            rights
             reserved.
         </div>
         <!-- /.container -->
@@ -259,8 +284,6 @@
 <script src="../vendor/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../vendor/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!--ChartJS 1.0.1-->
-<script src="../vendor/admin-lte/plugins/chartjs/Chart.min.js"></script>
 <!-- SlimScroll -->
 <script src="../vendor/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -269,6 +292,12 @@
 <script src="../vendor/admin-lte/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../vendor/admin-lte/dist/js/demo.js"></script>
+<!--eCharts-->
+<script src="../vendor/admin-lte/plugins/eCharts/echarts.min.js"></script>
+<!--ionSlider-->
+<script src="../vendor/admin-lte/plugins/ionslider/ion.rangeSlider.min.js"></script>
+
+<script src="../vendor/admin-lte/dist/js/cititool.js"></script>
 <script src="capital.js"></script>
 </body>
 </html>
