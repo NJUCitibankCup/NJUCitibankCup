@@ -23,12 +23,18 @@ $('#futures_type').change(function () {
 })
 
 $('#option_type').change(function () {
-  var $level = $('#block_level_group');
+  var $group = $('#block_level_group');
+  var $level = $('#block_level');
+  var $price = $('#option_price');
   if ($(this).val() === 'Ba') {
-    $level.show(300);
+    $group.show(300);
+    $level.focus();
   } else {
-    $level.hide(300);
+    $group.hide(300);
+    $price.focus();
   }
+  $level.val('');
+  $price.val('');
 })
 
 $('#calc_price').click(function () {
