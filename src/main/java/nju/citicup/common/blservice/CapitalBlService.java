@@ -10,5 +10,7 @@ public interface CapitalBlService {
 
     ObjectDataWrapper getVarGammaGraph(String[] option_list);
 
-    ObjectDataWrapper getPredictResult(int lower_gamma, String [] option_list, String target);
+    ObjectDataWrapper getPredictResult(int lower_gamma, String [] option_list);
+
+    ObjectDataWrapper getAdjustBin(int lower_gamma, String [] option_list);
 }

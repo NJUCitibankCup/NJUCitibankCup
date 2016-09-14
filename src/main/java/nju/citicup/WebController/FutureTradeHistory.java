@@ -1,8 +1,10 @@
 package nju.citicup.WebController;
 
+import nju.citicup.common.blservice.TradeBlService;
 import nju.citicup.common.vo.ObjectDataWrapper;
 import nju.citicup.common.vo.TradeRecordListVO;
 import nju.citicup.common.vo.TradeRecordVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,16 +17,13 @@ import java.util.Arrays;
  */
 @Controller
 public class FutureTradeHistory {
+
+    @Autowired
+    TradeBlService tradeBlService;
+
     @RequestMapping("/api/getHistory")
     @ResponseBody
     public ObjectDataWrapper getHistory(@RequestParam("future_id") String future_id) {
-        ObjectDataWrapper wrapper = new ObjectDataWrapper();
-        wrapper.setMsg("");
-        wrapper.setCondition("success");
-
-        TradeRecordListVO vo = new TradeRecordListVO(150, 8, Arrays.asList(new TradeRecordVO("2016-01-01", 1, 10), new TradeRecordVO("2016-01-02", 2, 30)));
-
-        wrapper.setData(vo);
-        return wrapper;
+        return tradeBlService.getHistory(future_id);
     }
 }
