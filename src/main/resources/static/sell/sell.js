@@ -4,23 +4,22 @@
 
 $(function() {
   $('.alert').hide();
-
-  var types = getFuturesType();
-  var $type = $('#futures_type');
-  $type.html('');
-  types.map(function(type, index) {
-    $type.append('<option value="' + type + '">' + type + '</option>');
+  getFuturesType(function(types) {
+    // console.log(types);
+    var $type = $('#futures_type');
+    $type.html('');
+    types.map(function(type, index) {
+      $type.append('<option value="' + type + '">' + type + '</option>');
+    });
   });
 
   var currentType = $('#futures_type').val();
-  var ids = getFuturesId(currentType);
-  updateFuturesId(ids);
+  getFuturesId(currentType, updateFuturesId);
 })
 
 $('#futures_type').change(function () {
   var type = $(this).val();
-  var ids = getFuturesId(type);
-  updateFuturesId(ids);
+  getFuturesId(type, updateFuturesId);
 })
 
 $('#option_type').change(function () {
@@ -34,21 +33,19 @@ $('#option_type').change(function () {
 
 $('#calc_price').click(function () {
   var data = getData();
-  var price = getOptionsPrice(data);
-  $('#output_price').html(price);
+  getOptionsPrice(data, function (price) {
+    $('#output_price').html(price);
+  });
 })
 
 $('#sell_options').click(function () {
   var data = getData();
-  var isSuccess = sellOptions(data);
-  if (isSuccess) {
-    $('#alert_success').show(300);
-  } else {
-    $('#alert_fail').show(300);
-  }
-  setTimeout(function () {
-    $('.alert').hide(300);
-  }, 5000);
+  sellOptions(data, function (condition) {
+    $('#alert_' + condition).show(300);
+    setTimeout(function () {
+      $('.alert').hide(300);
+    }, 5000);
+  });
 })
 
 $('.close_alert').click(function () {
@@ -64,9 +61,9 @@ function getData() {
     futures_id: id,
     type: type,
     price: price,
-    h: h
+    H: h
   }
-  console.log(data);
+  // console.log(data);
   return data;
 }
 
@@ -78,24 +75,23 @@ function updateFuturesId(ids) {
   });
 }
 
-function getFuturesType() {
-  var url = '/api/getFuturesType';
+function getFuturesType(callback) {
+  var url = 'http://120.27.117.222:8080/api/getFuturesType';
   $.ajax({
     type: 'GET',
     url: url,
     dataType: 'json',
     success: function(res) {
+      // console.log(res);
       if (res.condition === 'success') {
-        return res.data;
-      } else {
-        return [];
+        callback(res.data);
       }
     }
   });
 }
 
-function getFuturesId(type) {
-  var url = '/api/getFuturesId';
+function getFuturesId(type, callback) {
+  var url = 'http://120.27.117.222:8080/api/getFuturesId';
   var data = {
     type: type
   }
@@ -105,45 +101,40 @@ function getFuturesId(type) {
     data: data,
     dataType: 'json',
     success: function(res) {
+      // console.log(res);
       if (res.condition === 'success') {
-        return res.data;
-      } else {
-        return [];
+        callback(res.data);
       }
     }
   });
 }
 
-function getOptionsPrice(data) {
-  var url = '/api/getOptionsPrice';
+function getOptionsPrice(data, callback) {
+  var url = 'http://120.27.117.222:8080/api/getOptionsPrice';
   $.ajax({
     type: 'POST',
     url: url,
     data: data,
     dataType: 'json',
     success: function(res) {
+      // console.log(res);
       if (res.condition === 'success') {
-        return res.data.price;
-      } else {
-        return -1;
+        callback(res.data);
       }
     }
   });
 }
 
-function sellOptions(data) {
-  var url = '/api/sellOptions';
+function sellOptions(data, callback) {
+  var url = 'http://120.27.117.222:8080/api/sellOptions';
   $.ajax({
     type: 'POST',
     url: url,
     data: data,
     dataType: 'json',
     success: function(res) {
-      if (res.condition === 'success') {
-        return true;
-      } else {
-        return false;
-      }
+      // console.log(res);
+      callback(res.condition);
     }
   });
 }
