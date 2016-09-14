@@ -4,33 +4,51 @@
 
 $(function() {
   $('.alert').hide();
-  getFuturesType();
+
+  var types = getFuturesType();
+  var $type = $('#futures_type');
+  $type.html('');
+  types.map(function(type, index) {
+    $type.append('<option value="' + type + '">' + type + '</option>');
+  });
+
   var currentType = $('#futures_type').val();
-  console.log(currentType);
-  getFuturesId(currentType);
+  var ids = getFuturesId(currentType);
+  updateFuturesId(ids);
 })
 
 $('#futures_type').change(function () {
   var type = $(this).val();
-  getFuturesId(type);
+  var ids = getFuturesId(type);
+  updateFuturesId(ids);
 })
 
 $('#option_type').change(function () {
+  var $level = $('#block_level_group');
   if ($(this).val() === 'Ba') {
-    $('#block_level_group').show(300);
+    $level.show(300);
   } else {
-    $('#block_level_group').hide(300);
+    $level.hide(300);
   }
 })
 
 $('#calc_price').click(function () {
   var data = getData();
-  getOptionsPrice(data);
+  var price = getOptionsPrice(data);
+  $('#output_price').html(price);
 })
 
 $('#sell_options').click(function () {
   var data = getData();
-  sellOptions(data);
+  var isSuccess = sellOptions(data);
+  if (isSuccess) {
+    $('#alert_success').show(300);
+  } else {
+    $('#alert_fail').show(300);
+  }
+  setTimeout(function () {
+    $('.alert').hide(300);
+  }, 5000);
 })
 
 $('.close_alert').click(function () {
@@ -52,125 +70,80 @@ function getData() {
   return data;
 }
 
-function getFuturesType() {
-  var $type = $('#futures_type');
-
-  // var url = '/api/getFuturesType';
-  // $.ajax({
-  //   type: 'GET',
-  //   url: url,
-  //   dataType: 'json',
-  //   success: function(res) {
-  //     $type.html('');
-  //     res.data.map(function(type) {
-  //       $type.append('<option>' + type + '</option>');
-  //     });
-  //   }
-  // });
-
-  var res = {
-  	msg: '',
-    condition: 'success',
-    data: [
-    	'玉米', '大豆', '豆粕'
-    ]
-  }
-  $type.html('');
-  res.data.map(function(type, index) {
-    $type.append('<option value="' + type + '">' + type + '</option>');
-  });
-}
-
-function getFuturesId(type) {
+function updateFuturesId(ids) {
   var $id = $('#futures_id');
-  // var url = '/api/getFuturesId';
-  // var data = {
-  //   type: type
-  // }
-  // $.ajax({
-  //   type: 'GET',
-  //   url: url,
-  //   data: data,
-  //   dataType: 'json',
-  //   success: function(res) {
-  //     $id.html('');
-  //     res.data.map(function(id) {
-  //       $type.append('<option>' + id.futures_name + '</option>');
-  //     });
-  //   }
-  // });
-
-  var res = {
-  	msg: '',
-    condition: 'success',
-    data: [
-      {
-        futures_id: 'M1701',
-        futures_name: type + '1701'
-      },
-      {
-        futures_id: 'M1702',
-        futures_name: type + '1702'
-      },
-    ]
-  }
-
   $id.html('');
-  res.data.map(function(id) {
+  ids.map(function(id) {
     $id.append('<option value="' + id.futures_id + '">' + id.futures_name + '</option>');
   });
 }
 
-function getOptionsPrice(data) {
-  // var url = '/api/getOptionsPrice';
-  // $.ajax({
-  //   type: 'POST',
-  //   url: url,
-  //   data: data,
-  //   dataType: 'json',
-  //   success: function(res) {
-  //     $('#output_price').val(res.data.price);
-  //   }
-  // });
-
-  var res = {
-    msg: '',
-    condition: 'success',
-    data: {
-    	price: 100
+function getFuturesType() {
+  var url = '/api/getFuturesType';
+  $.ajax({
+    type: 'GET',
+    url: url,
+    dataType: 'json',
+    success: function(res) {
+      if (res.condition === 'success') {
+        return res.data;
+      } else {
+        return [];
+      }
     }
+  });
+}
+
+function getFuturesId(type) {
+  var url = '/api/getFuturesId';
+  var data = {
+    type: type
   }
-  $('#output_price').html(res.data.price);
+  $.ajax({
+    type: 'GET',
+    url: url,
+    data: data,
+    dataType: 'json',
+    success: function(res) {
+      if (res.condition === 'success') {
+        return res.data;
+      } else {
+        return [];
+      }
+    }
+  });
+}
+
+function getOptionsPrice(data) {
+  var url = '/api/getOptionsPrice';
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: data,
+    dataType: 'json',
+    success: function(res) {
+      if (res.condition === 'success') {
+        return res.data.price;
+      } else {
+        return -1;
+      }
+    }
+  });
 }
 
 function sellOptions(data) {
-  // var url = '/api/sellOptions';
-  // $.ajax({
-  //   type: 'POST',
-  //   url: url,
-  //   data: data,
-  //   dataType: 'json',
-  //   success: function(res) {
-  //     if (res.condition === 'success') {
-  //       $('#alert_success').show();
-  //     }
-  //     setTimeout(function () {
-  //       $('.alert').hide(300);
-  //     }, 5000);
-  //   }
-  // });
-
-  var res = {
-    msg: '',
-    condition: 'fail',
-    data: {}
-  }
-  if (res.condition === 'success') {
-    $('#alert_success').show(300);
-  } else {
-    $('#alert_fail').show(300);
-  }
-  setTimeout(function () {
-    $('.alert').hide(300);
-  }, 5000);
+  var url = '/api/sellOptions';
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: data,
+    dataType: 'json',
+    success: function(res) {
+      if (res.condition === 'success') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  });
 }
