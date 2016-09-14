@@ -18,5 +18,7 @@ public interface CapitalDataService {
 
     GammaVarObj getGraphInfo(String[] option_list);
 
-    Map<String, Object> getPredictObjMap(int lower_gamma, String [] option_list, String target);
+    Map<String, Object> getPredictObjMap(int lower_gamma, String [] option_list);
+
+    void adjustBin(int lower_gamma, String [] option_list);
 }

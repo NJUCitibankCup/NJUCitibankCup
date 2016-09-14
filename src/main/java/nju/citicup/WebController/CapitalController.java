@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 
 /**
@@ -34,36 +35,31 @@ public class CapitalController {
 
 
     @RequestMapping("/api/selectOptions")
-    public ObjectDataWrapper selectOptions(@RequestParam("option_list") String[] option_list) {
-        ObjectDataWrapper wrapper = new ObjectDataWrapper();
-        wrapper.setMsg("");
-        wrapper.setCondition("success");
+    public ObjectDataWrapper selectOptions(@RequestParam("option_list") String[] option_list, HttpSession session) {
 
-        double[] x_data = {5, 4, 3, 2, 1};
-        double[] y_data = {1, 2, 3, 4, 5};
+        session.setAttribute("option_list", option_list);
 
-        GraphVO graphVO = new GraphVO(x_data, y_data);
-        wrapper.setData(graphVO);
-
-        return wrapper;
+        return capitalBlService.getVarGammaGraph(option_list);
     }
 
     @RequestMapping("/api/predictResult")
-    public ObjectDataWrapper getPredictResult(@RequestParam("lower_gamma") int lower_gamma) {
-        ObjectDataWrapper wrapper = new ObjectDataWrapper();
-        wrapper.setMsg("");
-        wrapper.setCondition("success");
+    public ObjectDataWrapper getPredictResult(@RequestParam("lower_gamma") int lower_gamma, HttpSession session) {
 
-        PredictResultVO vo = new PredictResultVO("011701", "玉米1701", 250, 50, 500, 66, 33, 500, 233, SafeType.safe);
+        String[] option_list = (String[]) session.getAttribute("option_list");
 
-        wrapper.setData(vo);
-
-        return wrapper;
+        return capitalBlService.getPredictResult(lower_gamma, option_list);
     }
 
     @RequestMapping("/api/adjustBin")
-    public ObjectDataWrapper getAdjustBin(String futures_id,int lower_gamma){
+    public ObjectDataWrapper getAdjustBin(String futures_id,int lower_gamma, HttpSession session){
+
+        String[] option_list = (String[]) session.getAttribute("option_list");
+
         ObjectDataWrapper wapper = new ObjectDataWrapper();
+        wapper = capitalBlService.getAdjustBin(lower_gamma, option_list);
+
+        session.removeAttribute("option_list");
+
         return wapper;
     }
 

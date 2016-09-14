@@ -91,16 +91,17 @@ public class CapitalBlServiceImpl implements CapitalBlService{
     }
 
     @Override
-    public ObjectDataWrapper getPredictResult(int lower_gamma, String[] option_list, String target) {
+    public ObjectDataWrapper getPredictResult(int lower_gamma, String[] option_list) {
 
         ObjectDataWrapper wrapper = new ObjectDataWrapper();
         wrapper.setMsg("");
         wrapper.setCondition("success");
 
-        Map<String, Object> objMap = capitalDataService.getPredictObjMap(lower_gamma, option_list, target);
+        Map<String, Object> objMap = capitalDataService.getPredictObjMap(lower_gamma, option_list);
         BasicFutureInfo basicFutureInfo = (BasicFutureInfo) objMap.get("future");
         BasicTradeInfo basicTradeInfo = (BasicTradeInfo) objMap.get("trade");
         List<BasicOptionInfo> optionList = (List<BasicOptionInfo>) objMap.get("option_list");
+        String target = (String) objMap.get("target");
 
         String future_name = futureNameMapper.convert(target);
 
@@ -129,5 +130,16 @@ public class CapitalBlServiceImpl implements CapitalBlService{
 
         return wrapper;
 
+    }
+
+    @Override
+    public ObjectDataWrapper getAdjustBin(int lower_gamma, String[] option_list) {
+        ObjectDataWrapper wrapper = new ObjectDataWrapper();
+        wrapper.setMsg("");
+        wrapper.setCondition("success");
+
+        capitalDataService.adjustBin(lower_gamma, option_list);
+
+        return wrapper;
     }
 }
