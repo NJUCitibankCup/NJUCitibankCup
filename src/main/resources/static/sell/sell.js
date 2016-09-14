@@ -16,7 +16,7 @@ $('#futures_type').change(function () {
 })
 
 $('#option_type').change(function () {
-  if ($(this).val() === "Ba") {
+  if ($(this).val() === 'Ba') {
     $('#block_level_group').show(300);
   } else {
     $('#block_level_group').hide(300);
@@ -72,7 +72,7 @@ function getFuturesType() {
   	msg: '',
     condition: 'success',
     data: [
-    	"玉米", "大豆", "豆粕"
+    	'玉米', '大豆', '豆粕'
     ]
   }
   $type.html('');
@@ -101,16 +101,16 @@ function getFuturesId(type) {
   // });
 
   var res = {
-  	msg: "",
-    condition: "success",
+  	msg: '',
+    condition: 'success',
     data: [
       {
-        futures_id: "M1701",
-        futures_name: type + "1701"
+        futures_id: 'M1701',
+        futures_name: type + '1701'
       },
       {
-        futures_id: "M1702",
-        futures_name: type + "1702"
+        futures_id: 'M1702',
+        futures_name: type + '1702'
       },
     ]
   }
@@ -134,8 +134,8 @@ function getOptionsPrice(data) {
   // });
 
   var res = {
-    msg: "",
-    condition: "success",
+    msg: '',
+    condition: 'success',
     data: {
     	price: 100
     }
@@ -161,8 +161,8 @@ function sellOptions(data) {
   // });
 
   var res = {
-    msg: "",
-    condition: "fail",
+    msg: '',
+    condition: 'fail',
     data: {}
   }
   if (res.condition === 'success') {
