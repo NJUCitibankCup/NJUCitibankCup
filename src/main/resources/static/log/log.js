@@ -18,6 +18,7 @@ function loadResource() {
         timeout: 5000,
         success: function (res) {
             var data = response(res);
+            $('.loader--style3').hide();
             if (data != null) {
                 var quantity = data.quantity;
                 var averagePrice = data.average_price;

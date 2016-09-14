@@ -17,7 +17,7 @@ function preLoad() {
         success: function (res) {
             var data = response(res);
             if (data != null) {
-                $('#no-data').hide();
+                $('.loader--style3').hide();
                 for (var i = 0; i < data.length; i++) {
                     var type = data[i].type;
                     var detailDataList = data[i].data;
@@ -38,6 +38,8 @@ function preLoad() {
                     }
                     loadFutures(type, detail, moreTag);
                 }
+            } else {
+                $('#no-data').show(300);
             }
         }
     })

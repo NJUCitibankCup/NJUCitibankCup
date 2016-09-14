@@ -9,6 +9,7 @@ var gammaList = {};
 var VAR, gamma;
 var slider;
 var selected = false;
+var idList = [];
 
 $('.alert').hide();
 
@@ -18,12 +19,12 @@ $('.close_alert').click(function () {
 
 $('#close').click(function (e) {
     $('#detail-table').fadeOut(300);
-    $('#main-content').fadeTo(1, 300);
+    $('#main-content').fadeTo(300, 1);
     slider.destroy();
 });
 
 $("#adjustBtn").click(function () {
-    var idList = [];
+    idList = [];
     $("input[name='option_id_picker']").each(function () {
         if ($(this).is(':checked')) {
             selected = true;
@@ -37,7 +38,7 @@ $("#adjustBtn").click(function () {
         $('#chart-div').show();
         $('#table-div').hide();
         $('#var').text("");
-        $('#main-content').fadeTo(0.3, 300);
+        $('#main-content').fadeTo(300, 0.3);
         $('#detail-table').fadeIn(300);
 
         var dom = document.getElementById("chart");
@@ -50,7 +51,7 @@ $("#adjustBtn").click(function () {
                 option_list: idList
             },
             traditional: true,
-            timeout: 5000,
+            timeout: 30000,
             success: function (res) {
                 var data = response(res);
                 if (data != null) {
@@ -153,6 +154,7 @@ function resizeChart() {
 }
 
 var predictResUrl = "/api/predictResult";
+var adjustBinUrl = "/api/adjustBin";
 
 /**
  * 进入预览界面
@@ -161,9 +163,11 @@ function preview() {
     $.ajax({
         url: window.host + predictResUrl,
         data: {
-            lower_gamma: gamma
+            lower_gamma: gamma,
+            option_list: idList
         },
         timeout: 5000,
+        traditional: true,
         success: function (res) {
             var data = response(res);
             if (data != null) {
@@ -172,9 +176,9 @@ function preview() {
                 $('#origin-cost').text(data.origin_cost);
                 $('#origin-number').text(data.origin_number);
                 $('#current-number').text(data.current_number);
-                $('#origin-delta').text(data.origin_delta);
-                $('#current-delta').text(data.current_delta);
-                $('#current-var').text(VAR);
+                $('#origin-delta').text(data.origin_delta.toFixed(4));
+                $('#current-delta').text(data.current_delta.toFixed(4));
+                $('#current-var').text(VAR.toFixed(4));
                 if (data.safe == "warning") {
                     $('#predict-safety').removeClass('label-success').addClass('label-warning').text("warning");
                 }
@@ -194,16 +198,25 @@ function reAdjust() {
 
 function confirmAdjust() {
     $.ajax({
-        url: window.host + predictResUrl,
+        url: window.host + adjustBinUrl,
         data: {
             futures_id: futuresID,
-            lower_gamma: gamma
+            lower_gamma: gamma,
+            option_list: idList
         },
         timeout: 5000,
+        traditional: true,
         success: function (res) {
             var data = response(res);
+            $('#detail-table').hide();
+            $('#main-content').fadeTo(300, 1);
             if (data != null) {
-                //TODO 成功反馈
+                $('#alert_success').show(300);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500)
+            } else {
+                $('#alert_fail').show(300);
             }
         }
     })
@@ -224,6 +237,7 @@ function loadResource() {
         timeout: 5000,
         success: function (res) {
             var data = response(res);
+            $('.loader--style3').hide();
             if (data != null) {
                 var cost = data.cost;
                 var delta = data.delta;

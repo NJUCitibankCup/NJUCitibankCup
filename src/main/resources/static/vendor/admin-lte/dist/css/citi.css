@@ -63,3 +63,18 @@
     height: 15%;
     font-size: 16px;
 }
+
+.loader {
+    margin: 0 0 2em;
+    height: 100px;
+    width: 20%;
+    text-align: center;
+    padding: 1em;
+    margin: 0 auto 1em;
+    vertical-align: middle;
+}
+
+svg path,
+svg rect {
+    fill: #3c8dbc;
+}
