@@ -37,28 +37,20 @@ public class CapitalController {
     @RequestMapping("/api/selectOptions")
     public ObjectDataWrapper selectOptions(@RequestParam("option_list") String[] option_list, HttpSession session) {
 
-        session.setAttribute("option_list", option_list);
-
         return capitalBlService.getVarGammaGraph(option_list);
     }
 
     @RequestMapping("/api/predictResult")
-    public ObjectDataWrapper getPredictResult(@RequestParam("lower_gamma") int lower_gamma, HttpSession session) {
-
-        String[] option_list = (String[]) session.getAttribute("option_list");
+    public ObjectDataWrapper getPredictResult(@RequestParam("lower_gamma") int lower_gamma, String[] option_list) {
 
         return capitalBlService.getPredictResult(lower_gamma, option_list);
     }
 
     @RequestMapping("/api/adjustBin")
-    public ObjectDataWrapper getAdjustBin(String futures_id,int lower_gamma, HttpSession session){
-
-        String[] option_list = (String[]) session.getAttribute("option_list");
+    public ObjectDataWrapper getAdjustBin(String futures_id,int lower_gamma, String[] option_list){
 
         ObjectDataWrapper wapper = new ObjectDataWrapper();
         wapper = capitalBlService.getAdjustBin(lower_gamma, option_list);
-
-        session.removeAttribute("option_list");
 
         return wapper;
     }
