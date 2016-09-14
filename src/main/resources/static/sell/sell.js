@@ -171,7 +171,6 @@ function loadNews(currentType) {
         }
     })
 }
-
 function changeTypeNews(type) {
     $('#news-list').text('');
     $('#news-loader').show();

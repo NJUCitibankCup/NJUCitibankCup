@@ -58,7 +58,7 @@ var futures_template =
     '<div class="box-body table-responsive no-padding"> ' +
     '<table class="table table-hover"> ' +
     '<tr>' +
-    '<th>期货</th> ' +
+    '<th>期权</th> ' +
     '<th>数量</th> ' +
     '<th>Delta</th> ' +
     '<th>操作</th> ' +
@@ -88,7 +88,7 @@ var futures_content_template =
  * @param moreTag
  */
 function loadFutures(type, detail, moreTag) {
-    var template = futures_template.replace('futures-name', type);
+    var template = futures_template.replace('futures-name', type + "资产组合");
     template = template.replace('futures-content', detail);
     template = template.replace('futures-more', moreTag);
     $('#option-list').append(template);
@@ -186,9 +186,9 @@ var data_template =
     '<td width="200">type-num</td>' +
     '<td width="150"><span class="label label-success">type-delta</span></td>' +
     '<td>' +
-    '<button onclick="gotoCapital(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;">资产组合</button>' +
+    '<button onclick="gotoCapital(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;">组合详情</button>' +
     '<button onclick="gotoDetail(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;margin-left: 10px">' +
-    '交易详情' +
+    '对冲详情' +
     '</button>' +
     '</td>' +
     '</tr>';
