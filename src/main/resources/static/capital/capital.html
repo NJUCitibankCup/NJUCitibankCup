@@ -99,6 +99,21 @@
 
             <!-- Main content -->
             <section class="content" id="main-content">
+                <div class="alert alert-success alert-dismissible fade in" id="alert_success">
+                    <button type="button" class="close close_alert" aria-hidden="true">×</button>
+                    <strong class="default-font"><i class="icon fa fa-check"></i> 交易成功！</strong>
+                    <!-- 交易详细信息 -->
+                </div>
+                <div class="alert alert-danger alert-dismissible fade in" id="alert_fail">
+                    <button type="button" class="close close_alert" aria-hidden="true">×</button>
+                    <strong class="default-font"><i class="icon fa fa-ban"></i> 交易失败！</strong>
+                    <!-- 失败详细信息 -->
+                </div>
+                <div class="alert alert-warning alert-dismissible fade in" id="alert_warning">
+                    <button type="button" class="close close_alert" aria-hidden="true">×</button>
+                    <strong class="default-font"><i class="icon fa fa-ban"></i> 未选择调仓内容!</strong>
+                    <!-- 警告详细信息 -->
+                </div>
                 <div class="row">
                     <div class="col-lg-4 col-xs-6">
                         <!-- small box -->
@@ -158,36 +173,6 @@
                                 <th>期权种类</th>
                                 <th>选择</th>
                             </tr>
-                            <!--<tr>-->
-                            <!--<td>2016-08-01</td>-->
-                            <!--<td>1.00</td>-->
-                            <!--<td>10</td>-->
-                            <!--<td>20</td>-->
-                            <!--<td>100</td>-->
-                            <!--<td>Eu</td>-->
-                            <!--<input type="hidden" value="1111">-->
-                            <!--<td><input name="option_id_picker" type="checkbox"></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                            <!--<td>2016-08-02</td>-->
-                            <!--<td>2.00</td>-->
-                            <!--<td>20</td>-->
-                            <!--<td>40</td>-->
-                            <!--<td>200</td>-->
-                            <!--<td>Eu</td>-->
-                            <!--<input type="hidden" value="2222">-->
-                            <!--<td><input name="option_id_picker" type="checkbox"></td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                            <!--<td>2016-08-03</td>-->
-                            <!--<td>3.00</td>-->
-                            <!--<td>30</td>-->
-                            <!--<td>30</td>-->
-                            <!--<td>300</td>-->
-                            <!--<td>Ba</td>-->
-                            <!--<input type="hidden" value="3333">-->
-                            <!--<td><input name="option_id_picker" type="checkbox"></td>-->
-                            <!--</tr>-->
                         </table>
                     </div>
                     <!-- /.box-body -->
@@ -252,12 +237,12 @@
 
                 <div id="chart-div" style="height: 100%;" align="center">
                     <div id="chart" style="padding-top:2%;height:75%;width: 100%;"></div>
-                    <div style="height: 10%;padding: 0 4% 0 7%">
+                    <div style="height: 10%;padding: 0 3% 0 9%">
                         <input id="range_1" type="hidden" name="range_1" value="" class="irs-hidden-input" readonly="">
                     </div>
                     <div class="row prev-row">
                         <div class="col-md-8 bg-primary prev-btn">
-                            <b>当前VAR值:</b> <span id="var">1</span>
+                            <b>当前VAR值:</b> <span id="var"></span>
                         </div>
                         <div onclick="preview()" class="col-md-4 bg-gray-light prev-btn feedback">
                             确认Gamma

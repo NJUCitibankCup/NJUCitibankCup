@@ -4,13 +4,16 @@
 var futuresID = getParam(location.href, "futures_id");
 var getHistoryUrl = "/api/getHistory";
 
-//loadResource();
+$(function () {
+    loadResource();
+});
+
 
 function loadResource() {
     $.ajax({
         url: window.host + getHistoryUrl,
         data: {
-            futures_id: futuresID
+            future_id: futuresID
         },
         timeout: 5000,
         success: function (res) {
@@ -19,7 +22,7 @@ function loadResource() {
                 var quantity = data.quantity;
                 var averagePrice = data.average_price;
                 $('#futures-num').text(quantity);
-                $('#average-price').text(averagePrice);
+                $('#average-price').text(averagePrice.toFixed(2));
                 var historyList = data.data;
                 for (var i = 0; i < historyList.length; i++) {
                     var date = historyList[i].date;
@@ -47,7 +50,7 @@ var history_template =
  */
 function loadHistory(date, price, quantity) {
     var tags = ['date', 'price', 'quantity'];
-    var data = [date, price, quantity];
+    var data = [date, price.toFixed(2), quantity];
     var template = replaceTemplate(history_template, tags, data);
 
     $('#data-table').append(template);

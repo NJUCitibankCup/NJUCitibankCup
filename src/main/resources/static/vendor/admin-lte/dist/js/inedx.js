@@ -105,7 +105,7 @@ function loadFuturesContent(futuresID, futuresName, number, delta, safe) {
         template = template.replace('futures-safe', "warning");
     }
     template = template.replace('futures-num', number);
-    template = template.replace('futures-delta', delta);
+    template = template.replace('futures-delta', delta.toFixed(4));
     return template;
 }
 
