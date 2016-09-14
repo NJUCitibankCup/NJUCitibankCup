@@ -7,68 +7,92 @@ var xData, yData;
 var chart;
 var gammaList = {};
 var VAR, gamma;
+var slider;
+var selected = false;
+
+$('.alert').hide();
+
+$('.close_alert').click(function () {
+    $(this).parent().hide(300);
+});
 
 $('#close').click(function (e) {
     $('#detail-table').fadeOut(300);
-    $('#main-content').css('opacity', '1');
+    $('#main-content').fadeTo(1, 300);
+    slider.destroy();
 });
 
 $("#adjustBtn").click(function () {
-    $('#chart-div').show();
-    $('#table-div').hide();
-    $('#detail-table').fadeIn(300);
     var idList = [];
     $("input[name='option_id_picker']").each(function () {
         if ($(this).is(':checked')) {
+            selected = true;
             idList.push($(this).parent().prev('input').val());
         }
     });
-    var dom = document.getElementById("chart");
-    chart = echarts.init(dom);
-    chart.showLoading();
 
-    $.ajax({
-        url: window.host + selectOptionsUrl,
-        data: {
-            option_list: idList
-        },
-        dataType: 'json',
-        timeout: 5000,
-        success: function (res) {
-            var data = response(res);
-            if (data != null) {
-                xData = data.x_data;
-                yData = data.y_data;
-                for (var i = 0; i < xData.length && i < yData.length; i++) {
-                    gammaList[xData[i]] = yData[i];
-                }
-                /* ION SLIDER */
-                $("#range_1").ionRangeSlider({
-                    min: 1,
-                    max: 1501,
-                    from: 1,
-                    type: 'single',
-                    step: 50,
-                    prefix: "Gamma ",
-                    prettify: false,
-                    hasGrid: true,
-                    onStart: function () {
-                        gamma = 1;
-                        var currentVar = data[gamma];
-                        $('#var').text(currentVar);
-                        VAR = currentVar;
-                    },
-                    onChange: function (res) {
-                        gamma = res.from;
-                        var currentVar = data[gamma];
-                        $('#var').text(currentVar);
-                        VAR = currentVar;
+    if (selected) {
+        gammaList = {};
+        VAR = gamma = 0;
+        $('#chart-div').show();
+        $('#table-div').hide();
+        $('#var').text("");
+        $('#main-content').fadeTo(0.3, 300);
+        $('#detail-table').fadeIn(300);
+
+        var dom = document.getElementById("chart");
+        chart = echarts.init(dom);
+        chart.showLoading();
+
+        $.ajax({
+            url: window.host + selectOptionsUrl,
+            data: {
+                option_list: idList
+            },
+            traditional: true,
+            timeout: 5000,
+            success: function (res) {
+                var data = response(res);
+                if (data != null) {
+                    xData = data.x_data;
+                    yData = data.y_data;
+                    for (var i = 0; i < xData.length && i < yData.length; i++) {
+                        gammaList[xData[i]] = yData[i];
                     }
-                });
-                loadFunction(chart, xData, yData);
+                    /* ION SLIDER */
+                    $("#range_1").ionRangeSlider({
+                        min: 1,
+                        max: 1501,
+                        from: 1,
+                        type: 'single',
+                        step: 50,
+                        prefix: "Gamma ",
+                        prettify: false,
+                        hasGrid: true,
+                        onStart: function () {
+                            gamma = 1;
+                            var currentVar = gammaList[gamma];
+                            $('#var').text(currentVar);
+                            VAR = currentVar;
+                        },
+                        onChange: function (res) {
+                            gamma = res.from;
+                            var currentVar = gammaList[gamma];
+                            $('#var').text(currentVar);
+                            VAR = currentVar;
+                        }
+                    });
+                    slider = $("#range_1").data("ionRangeSlider");
+                    loadFunction(chart, xData, yData);
+                }
             }
-        }
-    });
+        });
+    } else {
+        $('#alert_warning').show(300);
+        setTimeout(function () {
+            $('.alert').hide(300);
+        }, 3000);
+    }
 });
 
 /**
@@ -204,8 +228,8 @@ function loadResource() {
                 var cost = data.cost;
                 var delta = data.delta;
                 var safe = data.safe;
-                $('#cost').text(cost);
-                $('#delta').text(delta);
+                $('#cost').text(cost.toFixed(2));
+                $('#delta').text(delta.toFixed(4));
                 switch (safe) {
                     case "warning":
                         $('#safe-block').removeClass('bg-green').addClass('bg-red');
@@ -253,7 +277,7 @@ var history_template =
  */
 function loadHistory(due_date, single_delta, sell_price, future_price, single_cost, type, optionID) {
     var tags = ['due_date', 'single_delta', 'sell_price', 'future_price', 'single_cost', 'sell_type', 'option-id'];
-    var data = [due_date, single_delta, sell_price, future_price, single_cost, type, optionID];
+    var data = [due_date, single_delta.toFixed(4), sell_price.toFixed(2), future_price.toFixed(2), single_cost.toFixed(2), type, optionID];
     var template = replaceTemplate(history_template, tags, data);
 
     $('#data-table').append(template);
