@@ -3,6 +3,7 @@
  */
 
 $(function() {
+  $('.alert').hide();
   getFuturesType();
   var currentType = $('#futures_type').val();
   console.log(currentType);
@@ -30,6 +31,10 @@ $('#calc_price').click(function () {
 $('#sell_options').click(function () {
   var data = getData();
   sellOptions(data);
+})
+
+$('.close_alert').click(function () {
+  $(this).parent().hide(300);
 })
 
 function getData() {
@@ -149,6 +154,9 @@ function sellOptions(data) {
   //     if (res.condition === 'success') {
   //       $('#alert_success').show();
   //     }
+  //     setTimeout(function () {
+  //       $('.alert').hide(300);
+  //     }, 5000);
   //   }
   // });
 
@@ -158,8 +166,11 @@ function sellOptions(data) {
     data: {}
   }
   if (res.condition === 'success') {
-    $('#alert_success').removeClass('hide');
+    $('#alert_success').show(300);
   } else {
-    $('#alert_fail').removeClass('hide');
+    $('#alert_fail').show(300);
   }
+  setTimeout(function () {
+    $('.alert').hide(300);
+  }, 5000);
 }
