@@ -1,8 +1,7 @@
-package nju.citicup.bl;
+package nju.citicup.bl.ScheduleTasks;
 
 import nju.citicup.data.dao.configdao.FutureConfigDao;
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,8 +18,8 @@ public class SigmaUpdater {
     @Autowired
     FutureConfigDao futureDao;
 
-    //礼拜一 至 礼拜五 每天23:00触发
-    @Scheduled(cron = "0 0 23 ? * MON-FRI")
+    //礼拜一 至 礼拜五 每天23:00:05触发
+    @Scheduled(cron = "5 0 23 ? * MON-FRI")
     public void updateSigma(){
         logger.info("触发sigma每日更新");
         List<String> targetList = futureDao.findAllTarget();
