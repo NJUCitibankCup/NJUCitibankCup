@@ -2,34 +2,57 @@
  * Created by PolarisChen on 2016/9/14.
  */
 $('.alert').hide();
-$(function () {
-    getFuturesType();
-    var currentType = $('#futures_type').val();
-    console.log(currentType);
-    getFuturesId(currentType);
+
+$(function() {
+  $('.alert').hide();
+  getFuturesType(function(types) {
+    // console.log(types);
+    var $type = $('#futures_type');
+    $type.html('');
+    types.map(function(type, index) {
+      $type.append('<option value="' + type + '">' + type + '</option>');
+    });
+  });
+
+  var currentType = $('#futures_type').val();
+  getFuturesId(currentType, updateFuturesId);
 })
 
 $('#futures_type').change(function () {
-    var type = $(this).val();
-    getFuturesId(type);
+  var type = $(this).val();
+  getFuturesId(type, updateFuturesId);
 })
 
 $('#option_type').change(function () {
-    if ($(this).val() === "Ba") {
-        $('#block_level_group').show(300);
-    } else {
-        $('#block_level_group').hide(300);
-    }
+  var $group = $('#block_level_group');
+  var $level = $('#block_level');
+  var $price = $('#option_price');
+  if ($(this).val() === 'Ba') {
+    $group.show(300);
+    $level.focus();
+  } else {
+    $group.hide(300);
+    $price.focus();
+  }
+  $level.val('');
+  $price.val('');
 })
 
 $('#calc_price').click(function () {
-    var data = getData();
-    getOptionsPrice(data);
+  var data = getData();
+  getOptionsPrice(data, function (price) {
+    $('#output_price').html(price);
+  });
 })
 
 $('#sell_options').click(function () {
-    var data = getData();
-    sellOptions(data);
+  var data = getData();
+  sellOptions(data, function (condition) {
+    $('#alert_' + condition).show(300);
+    setTimeout(function () {
+      $('.alert').hide(300);
+    }, 5000);
+  });
 })
 
 $('.close_alert').click(function () {
@@ -172,4 +195,88 @@ function sellOptions(data) {
     setTimeout(function () {
         $('.alert').hide(300);
     }, 5000);
+  var id = $('#futures_id').val();
+  var type = $('#option_type').val();
+  var price = $('#option_price').val() | 0;
+  var h = type === 'Ba' ? ($('#block_level').val() | 0) : -1;
+  var data = {
+    futures_id: id,
+    type: type,
+    price: price,
+    H: h
+  }
+  // console.log(data);
+  return data;
+}
+
+function updateFuturesId(ids) {
+  var $id = $('#futures_id');
+  $id.html('');
+  ids.map(function(id) {
+    $id.append('<option value="' + id.futures_id + '">' + id.futures_name + '</option>');
+  });
+}
+
+function getFuturesType(callback) {
+  var url = 'http://120.27.117.222:8080/api/getFuturesType';
+  $.ajax({
+    type: 'GET',
+    url: url,
+    dataType: 'json',
+    success: function(res) {
+      // console.log(res);
+      if (res.condition === 'success') {
+        callback(res.data);
+      }
+    }
+  });
+}
+
+function getFuturesId(type, callback) {
+  var url = 'http://120.27.117.222:8080/api/getFuturesId';
+  var data = {
+    type: type
+  }
+  $.ajax({
+    type: 'GET',
+    url: url,
+    data: data,
+    dataType: 'json',
+    success: function(res) {
+      // console.log(res);
+      if (res.condition === 'success') {
+        callback(res.data);
+      }
+    }
+  });
+}
+
+function getOptionsPrice(data, callback) {
+  var url = 'http://120.27.117.222:8080/api/getOptionsPrice';
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: data,
+    dataType: 'json',
+    success: function(res) {
+      // console.log(res);
+      if (res.condition === 'success') {
+        callback(res.data);
+      }
+    }
+  });
+}
+
+function sellOptions(data, callback) {
+  var url = 'http://120.27.117.222:8080/api/sellOptions';
+  $.ajax({
+    type: 'POST',
+    url: url,
+    data: data,
+    dataType: 'json',
+    success: function(res) {
+      // console.log(res);
+      callback(res.condition);
+    }
+  });
 }
