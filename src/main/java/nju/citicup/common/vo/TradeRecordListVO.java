@@ -7,13 +7,13 @@ import java.util.List;
  */
 public class TradeRecordListVO {
     private int quantity;
-    private int average_price;
+    private double average_price;
     private List<TradeRecordVO> data;
 
     public TradeRecordListVO() {
     }
 
-    public TradeRecordListVO(int quantity, int average_price, List<TradeRecordVO> data) {
+    public TradeRecordListVO(int quantity, double average_price, List<TradeRecordVO> data) {
         this.quantity = quantity;
         this.average_price = average_price;
         this.data = data;
@@ -27,7 +27,7 @@ public class TradeRecordListVO {
         this.quantity = quantity;
     }
 
-    public int getAverage_price() {
+    public double getAverage_price() {
         return average_price;
     }
 
