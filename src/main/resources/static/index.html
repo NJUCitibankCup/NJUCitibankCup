@@ -95,28 +95,44 @@
 
             <!-- Main content -->
             <section id="main-content" class="content">
-                <div class="box box-default">
-                    <div class="box-body" style="font-size: 18px">
-                        <i class="fa fa-info" style="padding: 5px;"></i> 公告
+                <div id="news-div" class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title default-font">
+                            <i class="fa fa-newspaper-o" style="padding: 5px;"></i> 新闻
+                        </h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
                     </div>
-                    <hr style="margin: 0;"/>
-                    <div class="box-body">
-                        东南沿海城市发布降雨黄色预警，各大商家纷纷做出应对措施. <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                    <div class="box-body">
-                        南京大学商学院与南京茂业期货有限公司签署合作协议. <i class="fa fa-arrow-circle-right"></i>
+                    <!-- /.box-header -->
+                    <div class="box-body" id="news-list">
+                        <div class="loader loader--style3" title="2" id="news-loader">
+                            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                                    <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                                          from="0 25 25" to="360 25 25" dur="0.6s"repeatCount="indefinite"/>
+                                </path>
+                            </svg>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-                <div class="loader loader--style3" title="2">
+                <div class="loader loader--style3" title="2" id="main-loader">
                     <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                    <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
-                        <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                         width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                        <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                            <animateTransform attributeType="xml" attributeName="transform" type="rotate"
                                           from="0 25 25" to="360 25 25" dur="0.6s"repeatCount="indefinite"/>
-                    </path>
-                </svg>
+                        </path>
+                    </svg>
                 </div>
                 <div class="box box-default" id="no-data" style="padding: 8px;display: none;">
                     <div class="box-body">

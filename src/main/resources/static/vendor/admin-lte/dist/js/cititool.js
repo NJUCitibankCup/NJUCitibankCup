@@ -3,11 +3,18 @@
  */
 
 /*-------------------------------URL操作-------------------------------------*/
-window.host = "http://114.212.242.193:8080";
+window.host = "http://120.27.117.222:8080";
 window.proxy = "http://localhost:63342/resources/static";
-window.capitalUrl = proxy + "/capital/capital.html";
-window.logUrl = proxy + "/log/log.html";
+window.capitalUrl = host + "/capital/capital.html";
+window.logUrl = host + "/log/log.html";
 
+/**
+ * 添加参数
+ * @param url
+ * @param key
+ * @param value
+ * @returns {string}
+ */
 function addParams(url, key, value) {
     if (url.charAt(url.length - 1) != "?" && url.charAt(url.length - 1) != "&") {
         url += "?";

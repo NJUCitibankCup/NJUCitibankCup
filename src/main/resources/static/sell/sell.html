@@ -95,13 +95,13 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="alert alert-success alert-dismissible fade in" id="alert_success">
+                <div class="alert alert-success alert-dismissible fade in" id="alert_success" style="display: none">
                     <button type="button" class="close close_alert" aria-hidden="true">×</button>
                     <strong class="default-font"><i class="icon fa fa-check"></i> 交易成功！</strong>
                     <!-- 交易详细信息 -->
                 </div>
 
-                <div class="alert alert-danger alert-dismissible fade in" id="alert_fail">
+                <div class="alert alert-danger alert-dismissible fade in" id="alert_fail" style="display: none">
                     <button type="button" class="close close_alert" aria-hidden="true">×</button>
                     <strong class="default-font"><i class="icon fa fa-ban"></i> 交易失败！</strong>
                     <!-- 失败详细信息 -->
@@ -117,12 +117,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>期货类型</label>
-                                    <select class="form-control" id="futures_type">
-                                        <option>大豆</option>
-                                        <option>大豆</option>
-                                        <option>大豆</option>
-                                        <option>大豆</option>
-                                        <option>大豆</option>
+                                    <select class="form-control" id="futures_type"
+                                            onchange="changeTypeNews(this.value)">
                                     </select>
                                 </div>
                             </div>
@@ -130,11 +126,6 @@
                                 <div class="form-group">
                                     <label>期权标的</label>
                                     <select class="form-control" id="futures_id">
-                                        <option>大豆1701</option>
-                                        <option>大豆1702</option>
-                                        <option>大豆1703</option>
-                                        <option>大豆1704</option>
-                                        <option>大豆1705</option>
                                     </select>
                                 </div>
                             </div>
@@ -171,13 +162,39 @@
                         <button type="submit" class="btn btn-primary" style="width: 30%;" id="calc_price"
                                 data-toggle="modal" data-target="#price-modal">查看价格
                         </button>
-                        <button type="submit" class="btn btn-primary bg-green" style="width: 30%;display: none;">
-                            确认交易
-                        </button>
                     </div>
                     <!-- /.box-footer -->
                 </div>
                 <!-- /.box -->
+                <div id="news-div" class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title default-font">
+                            <i class="fa fa-newspaper-o" style="padding: 5px;"></i> 新闻
+                        </h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" id="news-list">
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="loader loader--style3" title="2" id="news-loader">
+                        <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                                    <animateTransform attributeType="xml" attributeName="transform" type="rotate"
+                                          from="0 25 25" to="360 25 25" dur="0.6s"repeatCount="indefinite"/>
+                                </path>
+                            </svg>
+                    </div>
+                </div>
             </section>
             <!-- /.content -->
         </div>
@@ -195,13 +212,13 @@
 </div>
 <!-- ./wrapper -->
 
-<div class="modal" id="price-modal" role="dialog">
-    <div class="modal-dialog">
+<div class="modal" id="price-modal" role="dialog" style="padding-top: 10%">
+    <div class="modal-dialog default-font">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">输出价格</h4>
+                <h4 class="modal-title default-font">输出价格</h4>
             </div>
             <div class="modal-body">
                 <p>输出价格为￥<b id="output_price"></b></p>
@@ -230,6 +247,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../vendor/admin-lte/dist/js/demo.js"></script>
 
+<script src="../vendor/admin-lte/dist/js/cititool.js"></script>
 <script src="sell.js"></script>
 </body>
 </html>

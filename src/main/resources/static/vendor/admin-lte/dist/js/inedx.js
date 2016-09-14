@@ -5,7 +5,11 @@
 var optionStateUrl = "/api/optionState";
 
 /*------------------------------------主数据加载----------------------------------------------*/
-preLoad();
+$(function () {
+    preLoad();
+    loadNews();
+});
+
 
 /**
  * 加载页面资源
@@ -17,7 +21,7 @@ function preLoad() {
         success: function (res) {
             var data = response(res);
             if (data != null) {
-                $('.loader--style3').hide();
+                $('#main-loader').hide();
                 for (var i = 0; i < data.length; i++) {
                     var type = data[i].type;
                     var detailDataList = data[i].data;
@@ -205,6 +209,34 @@ function loadData(name, num, delta, deltaCon, capitalID) {
     $('#data-table').append(template);
 }
 
+/*------------------------------------------加载新闻---------------------------------------------------*/
+function loadNews() {
+    var newsUrl = "/api/news";
+    var news_template =
+        '<div class="box-body">' +
+        '<a href="news-link" class="feedback text-black" target="_Blank">news-content ' +
+        '<i class="fa fa-arrow-circle-right text-green"></i></a> ' +
+        '</div>';
+
+    $.ajax({
+        url: window.host + newsUrl,
+        data: {
+            key_word: "期权"
+        },
+        timeout: 10000,
+        success: function (res) {
+            $('#news-loader').hide();
+            var data = response(res);
+            if (data != null) {
+                for (var i = 0; i < data.length; i++) {
+                    var tags = ['news-link', 'news-content'];
+                    var currentData = [data[i].link, data[i].title];
+                    $('#news-list').append(replaceTemplate(news_template, tags, currentData));
+                }
+            }
+        }
+    })
+}
 
 /*------------------------------------------跳转---------------------------------------------------*/
 function gotoCapital(futuresID) {

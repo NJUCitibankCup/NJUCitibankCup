@@ -11,8 +11,6 @@ var slider;
 var selected = false;
 var idList = [];
 
-$('.alert').hide();
-
 $('.close_alert').click(function () {
     $(this).parent().hide(300);
 });
