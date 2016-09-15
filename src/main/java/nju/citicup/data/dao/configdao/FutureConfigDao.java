@@ -48,6 +48,7 @@ public class FutureConfigDao {
         return futureDao.findByTargetStartsWith(type)
                 .stream()
                 .map(BasicFutureInfo::getTarget)
+                .filter(f -> f.length() == type.length()+4)
                 .collect(Collectors.toList());
     }
 }

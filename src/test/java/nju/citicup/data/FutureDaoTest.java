@@ -38,6 +38,7 @@ public class FutureDaoTest {
     @Test
     public void testGetTargetByType(){
         assert futureConfigDao.findTargetByType("A").contains("A1611");
+        assert !futureConfigDao.findTargetByType("C").contains("CF1611");
     }
 
 }
