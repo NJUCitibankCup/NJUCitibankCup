@@ -28,7 +28,7 @@ public class POVOConvertor {
 
 
     public CapitalVO convertOptionInfo2Capital(BasicOptionInfo basicOptionInfo, String stockCode){
-        double St = futureInfoClient.getTemporaryInfo(stockCode);
+//        double St = futureInfoClient.getTemporaryInfo(stockCode);
         String option_id = basicOptionInfo.getId()+"";
         OptionType type = OptionType.Eu;
         if(basicOptionInfo instanceof BaOptionInfo)
@@ -36,7 +36,9 @@ public class POVOConvertor {
         String due_date = DateUtil.target2Date(stockCode);
 
         return new CapitalVO(option_id, type, due_date, basicOptionInfo.getDelta(),
-                basicOptionInfo.getPrice(), St, basicOptionInfo.getCost());
+                basicOptionInfo.getPrice(),
+                basicOptionInfo.getExecutivePrice(),
+                basicOptionInfo.getCost());
     }
 
     public OptionStateVO convertOptionList2OptionState(List<BasicOptionInfo> basicOptionInfoList, String stockCode, SafeType safeType){
