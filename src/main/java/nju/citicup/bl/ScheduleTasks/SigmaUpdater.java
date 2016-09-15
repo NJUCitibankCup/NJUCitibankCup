@@ -19,7 +19,7 @@ public class SigmaUpdater {
     FutureConfigDao futureDao;
 
     //礼拜一 至 礼拜五 每天23:00:05触发
-    @Scheduled(cron = "5 0 23 ? * MON-FRI")
+//    @Scheduled(cron = "5 0 23 ? * MON-FRI")
     public void updateSigma(){
         logger.info("触发sigma每日更新");
         List<String> targetList = futureDao.findAllTarget();
