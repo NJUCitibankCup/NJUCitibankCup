@@ -39,7 +39,7 @@ $('#calc_price').click(function () {
     var data = getData();
     $('#price-modal').fadeIn(300);
     getOptionsPrice(data, function (price) {
-        $('#output_price').html(price);
+        $('#output_price').html(price.toFixed(2));
     });
 });
 
@@ -66,7 +66,7 @@ function getData() {
         futures_id: id,
         type: type,
         price: price,
-        h: h
+        H: h
     };
     console.log(data);
     return data;
