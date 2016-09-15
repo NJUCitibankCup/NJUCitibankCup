@@ -75,9 +75,9 @@ var futures_content_template =
     '<td><span class="label label-futures-safe">futures-delta</span></td>' +
     '<td>' +
     '<button onclick="gotoCapital(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;">' +
-    '<i class="fa fa-th"></i>  资产组合</button>' +
+    '<i class="fa fa-th"></i>  组合详情</button>' +
     '<button onclick="gotoDetail(\'futures-id\')" class="btn btn-default btn-xs" style="width: 45%;margin-left: 10px">' +
-    '<i class="fa fa-cny"></i>  交易详情</button>' +
+    '<i class="fa fa-cny"></i>  对冲详情</button>' +
     '</td>' +
     '</tr>';
 
